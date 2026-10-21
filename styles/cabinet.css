@@ -1,0 +1,28 @@
+/* Intérieur du cabinet, verrou de séance */
+/* ---------- Cabinet (interior) ---------- */
+.cabinet .room-ui{position:absolute;inset:0;pointer-events:none}
+.cabinet .room-ui > *{pointer-events:auto}
+#btnExit{left:28px;top:790px;width:150px;height:124px}
+#btnLeave{left:28px;top:482px;width:121px;height:124px}
+#btnSession{position:absolute;left:786px;top:808px;width:520px;height:104px;border-radius:30px;flex-direction:row;gap:14px}
+#btnSession svg{width:52px;height:52px}
+#btnSession span{font-size:34px;white-space:nowrap;line-height:1}
+#btnSession small{display:block;font:800 21px/1 var(--font-body);color:#0d3a05;text-shadow:none;margin-top:4px}
+#btnSession .bs-txt{display:flex;flex-direction:column;align-items:flex-start}
+#sessionBar{position:absolute;left:746px;top:808px;width:600px;height:100px;box-sizing:border-box;border-radius:26px;border:5px solid var(--outline);background:linear-gradient(#2c3749,#16273a);box-shadow:0 6px 0 rgba(0,0,0,.3);overflow:hidden;display:flex;align-items:center;gap:14px;padding:0 18px}
+#sessionBar .sb-fill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(#a6f562,#4cc322 55%,#2f9612);box-shadow:inset 0 4px 0 rgba(255,255,255,.4);z-index:0}
+#sessionBar img{position:relative;z-index:1;width:56px;height:56px;border-radius:50%;border:3px solid var(--white);box-shadow:0 0 0 3px var(--outline);background:#cfe3f7}
+#sessionBar .sb-col{position:relative;z-index:1;display:flex;flex-direction:column;gap:6px;min-width:0}
+#sessionBar .sb-txt{font:30px/1 var(--font-display);color:var(--white);text-shadow:var(--o-sm);white-space:nowrap}
+#sessionBar .sb-sub{font:800 19px/1.1 var(--font-body);color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.45);white-space:nowrap}
+#sessionBar .sb-time{position:relative;z-index:1;margin-left:auto;font:34px/1 var(--font-display);color:var(--white);text-shadow:var(--o-sm);font-variant-numeric:tabular-nums}
+#teamPanel{position:absolute;left:180px;top:200px;display:flex;flex-direction:column;gap:10px}
+.tm{display:flex;align-items:center;gap:10px;white-space:nowrap;padding:6px 16px 6px 6px;border-radius:40px;background:rgba(11,20,42,.78);border:3px solid rgba(255,255,255,.35);font:22px/1.1 var(--font-display);color:var(--white);text-shadow:var(--o-sm);cursor:pointer}
+.tm img{width:54px;height:54px;border-radius:50%;border:3px solid var(--white);background:#cfe3f7}
+.tm span{display:flex;flex-direction:column;align-items:flex-start}
+.tm small{display:block;font:800 16px/1.2 var(--font-body);color:#cfe1ff;text-shadow:none}
+.tm.away{opacity:.6}
+.slotplus{position:absolute;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:50%;border:4px solid rgba(255,255,255,.9);background:radial-gradient(circle,rgba(255,251,214,.75),rgba(255,236,150,.35));box-shadow:0 0 18px rgba(255,236,150,.9);display:grid;place-items:center;cursor:pointer;padding:0;animation:haloPulse 1.6s ease-in-out infinite}
+.slotplus svg{width:40px;height:40px}
+#hudLayer.locked ~ .scene .slotplus{pointer-events:none}
+

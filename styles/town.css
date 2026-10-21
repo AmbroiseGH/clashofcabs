@@ -1,0 +1,25 @@
+/* Ville */
+/* ---------- Town ---------- */
+.plots{position:absolute;left:0;top:0;width:1672px;height:941px;overflow:visible}
+.plot,.hit{cursor:pointer;outline:none}
+.hit{fill:rgba(255,255,255,0)}
+.plot .area{fill:rgba(255,250,214,0);stroke:rgba(255,255,255,0);stroke-width:5;stroke-linejoin:round;animation:plotPulse 2.6s ease-in-out infinite;transition:stroke .2s}
+.plot:nth-of-type(2) .area{animation-delay:-.6s}.plot:nth-of-type(3) .area{animation-delay:-1.2s}.plot:nth-of-type(4) .area{animation-delay:-1.8s}
+.plot .halo{fill:url(#plusGlow);opacity:0;animation:haloPulse 2.6s ease-in-out infinite}
+.plot:hover .area,.plot:focus-visible .area{animation:none;fill:rgba(255,250,214,.28);stroke:rgba(255,255,255,.95)}
+.plot:hover .halo{opacity:.9}
+.plot.used{display:none}
+@keyframes plotPulse{0%,100%{fill:rgba(255,250,214,0)}50%{fill:rgba(255,250,214,.17)}}
+@keyframes plotStrong{0%,100%{fill:rgba(255,246,170,.1)}50%{fill:rgba(255,246,170,.42)}}
+@keyframes haloPulse{0%,100%{opacity:.15}50%{opacity:.8}}
+.world{position:absolute;left:0;top:0;width:1672px;height:941px;pointer-events:none}
+.bldhit{position:absolute;padding:0;border:0;background:transparent;cursor:pointer;border-radius:30px;outline:none}
+.bldhit:focus-visible{box-shadow:0 0 0 5px var(--gold)}
+.bld-label{position:absolute;transform:translateX(-50%);padding:6px 16px 7px;border-radius:13px;border:3px solid var(--outline);background:linear-gradient(#5fb2ff,#2a6fd6);font:25px/1 var(--font-display);color:var(--white);text-shadow:var(--o-sm);white-space:nowrap;pointer-events:none}
+.bubble{position:absolute;transform:translate(-50%,-100%);pointer-events:auto;cursor:pointer;padding:0;border:0;background:none;animation:bubbleBob 1.1s ease-in-out infinite alternate}
+.bubble .b-in{display:flex;align-items:center;gap:6px;min-width:58px;height:58px;padding:0 12px;box-sizing:border-box;border-radius:20px;border:4px solid var(--outline);background:linear-gradient(#ffffff,#dfeaf7);font:26px/1 var(--font-display);color:var(--text);box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.bubble .b-in svg{width:34px;height:34px;flex:none}
+.bubble::after{content:"";position:absolute;left:50%;bottom:-13px;margin-left:-11px;border:11px solid transparent;border-top:13px solid var(--outline);border-bottom:0}
+.bubble.offer .b-in{background:linear-gradient(#fff6c9,#ffd75a)}
+.bubble.wait .b-in{background:linear-gradient(#e7f6ff,#b9dcf6)}
+@keyframes bubbleBob{from{transform:translate(-50%,-100%) translateY(0)}to{transform:translate(-50%,-100%) translateY(-9px)}}

@@ -1,0 +1,42 @@
+/* Écran titre */
+/* ---------- Title ---------- */
+.title img{pointer-events:none}
+.cam{position:absolute;inset:0;transform-origin:50% 42%}
+.title.intro .cam{animation:camIntro 2.4s cubic-bezier(.16,.84,.3,1) both}
+.title.idle .cam{animation:kenburns 26s ease-in-out infinite alternate}
+@keyframes camIntro{from{transform:scale(1.15) translateY(16px);filter:brightness(1.7) saturate(.5)}45%{filter:brightness(1.04) saturate(1)}to{transform:scale(1);filter:none}}
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.035) translate(-6px,3px)}}
+.char{will-change:transform;animation:breathe 3.6s ease-in-out infinite}
+#char_l{left:202px;top:231px;width:447px;height:571px;transform-origin:52% 98%}
+#char_w{left:603px;top:262px;width:446px;height:452px;transform-origin:50% 100%;animation-duration:4.2s;animation-delay:-1.4s}
+#char_r{left:902px;top:286px;width:474px;height:516px;transform-origin:60% 96%;animation-duration:3.3s;animation-delay:-2.3s}
+@keyframes breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(1.005,1.013)}}
+.logo-pos{position:absolute;left:532px;top:6px;width:606px;height:312px;transform-origin:50% 62%}
+.title.intro .logo-pos{animation:pop .9s ease-out 1.05s both}
+.logo-mask{position:absolute;inset:0;-webkit-mask:var(--logo-url) center/100% 100% no-repeat;mask:var(--logo-url) center/100% 100% no-repeat;animation:logoFloat 5s ease-in-out infinite}
+.logo-mask img,.play-mask img{left:0;top:0;width:100%;height:100%}
+@keyframes logoFloat{0%,100%{transform:scale(1)}50%{transform:scale(1.012)}}
+@keyframes pop{0%{transform:scale(1)}30%{transform:scale(1.12)}58%{transform:scale(1)}80%{transform:scale(1.035)}100%{transform:scale(1)}}
+.shine{position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 0 44%,rgba(255,255,255,.7) 50%,transparent 56% 100%) no-repeat;background-size:300% 100%;background-position:100% 0;animation:shine 6s ease-in-out 2.2s infinite}
+@keyframes shine{0%,52%{background-position:100% 0}82%,100%{background-position:0% 0}}
+.rays{position:absolute;left:-20%;top:-60%;width:140%;height:160%;pointer-events:none;transform-origin:44% 30%;
+  background:conic-gradient(from 148deg at 44% 30%,transparent 0deg,rgba(255,238,196,.55) 5deg,transparent 11deg,transparent 19deg,rgba(255,238,196,.38) 23deg,transparent 30deg,transparent 37deg,rgba(255,238,196,.5) 40deg,transparent 46deg,transparent 55deg,rgba(255,238,196,.32) 59deg,transparent 66deg,transparent 360deg);
+  -webkit-mask:linear-gradient(to bottom,#000 38%,transparent 82%);mask:linear-gradient(to bottom,#000 38%,transparent 82%);
+  mix-blend-mode:soft-light;opacity:.75;animation:rays 13s ease-in-out infinite alternate}
+@keyframes rays{from{transform:rotate(-3deg);opacity:.55}to{transform:rotate(3deg);opacity:.85}}
+.play{position:absolute;left:600px;top:710px;width:471px;height:123px;padding:0;margin:0;border:0;background:none;cursor:pointer;border-radius:58px;outline:none}
+.play:focus-visible{box-shadow:0 0 0 5px var(--white),0 0 0 9px var(--outline)}
+.title.intro .play{animation:pop .8s ease-out 1.55s both}
+.play-hover{position:absolute;inset:0;transition:transform .2s cubic-bezier(.3,1.6,.5,1),filter .2s}
+.play:hover .play-hover{transform:scale(1.05);filter:brightness(1.08) saturate(1.1)}
+.play:active .play-hover,.play.pressed .play-hover{transform:scale(.975);filter:brightness(.88)}
+.play-glow{position:absolute;inset:10px 14px;border-radius:60px;box-shadow:0 0 38px 12px rgba(160,255,96,.6);animation:glow 1.8s ease-in-out infinite}
+.play-mask{position:absolute;inset:0;-webkit-mask:var(--pill-url) center/100% 100% no-repeat;mask:var(--pill-url) center/100% 100% no-repeat;animation:playBreathe 1.8s ease-in-out infinite}
+.play-mask .shine{animation:shine 3.4s ease-in-out 2.6s infinite}
+@keyframes playBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+@keyframes glow{0%,100%{opacity:.1}50%{opacity:.75}}
+.iconbtn{position:absolute;z-index:5;width:78px;height:78px;border-radius:50%;border:4px solid rgba(255,255,255,.6);background:rgba(11,18,38,.55);color:var(--white);display:grid;place-items:center;cursor:pointer;padding:0;transition:transform .15s,background .15s}
+.iconbtn:hover{transform:scale(1.08);background:rgba(11,18,38,.75)}
+.iconbtn svg{width:40px;height:40px}
+#soundBtn{right:30px;bottom:30px}
+#soundBtn .off{display:none}#soundBtn.muted .on{display:none}#soundBtn.muted .off{display:block}

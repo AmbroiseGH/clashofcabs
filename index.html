@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Clash of Cab's</title>
+<meta name="description" content="Jeu pédagogique de gestion de cabinet de kinésithérapie, projet K5 (UE14)">
+<meta name="theme-color" content="#0b1226">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Clash of Cab's">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/title.css">
+<link rel="stylesheet" href="styles/town.css">
+<link rel="stylesheet" href="styles/hud.css">
+<link rel="stylesheet" href="styles/cabinet.css">
+<link rel="stylesheet" href="styles/panels.css">
+<link rel="stylesheet" href="styles/dialogs.css">
+<link rel="stylesheet" href="styles/declaration.css">
+<link rel="stylesheet" href="styles/overlays.css">
+<link rel="stylesheet" href="styles/tweaks.css">
+<link rel="stylesheet" href="styles/features.css">
+<link rel="stylesheet" href="styles/intro.css">
+<link rel="stylesheet" href="styles/castle-day.css">
+<script type="module" src="src/main.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="gCoin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe46b"/><stop offset=".55" stop-color="#ffbf1f"/><stop offset="1" stop-color="#e08a00"/></linearGradient>
+    <linearGradient id="gStar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fd0ff"/><stop offset="1" stop-color="#1478e0"/></linearGradient>
+    <linearGradient id="gShield" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#63b9ff"/><stop offset="1" stop-color="#1d5fd0"/></linearGradient>
+    <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe27a"/><stop offset="1" stop-color="#e09a1a"/></linearGradient>
+    <linearGradient id="gStone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6f3ec"/><stop offset="1" stop-color="#cbc4b6"/></linearGradient>
+    <linearGradient id="gStoneV" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f6f3ec"/><stop offset="1" stop-color="#cfc8ba"/></linearGradient>
+    <linearGradient id="gRoof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a9cf0"/><stop offset="1" stop-color="#2a5cb8"/></linearGradient>
+    <linearGradient id="gPig" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc6da"/><stop offset="1" stop-color="#f27aa3"/></linearGradient>
+    <linearGradient id="gLock" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd75a"/><stop offset="1" stop-color="#d98a10"/></linearGradient>
+    <linearGradient id="gGreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8be35c"/><stop offset="1" stop-color="#2f9a12"/></linearGradient>
+    <linearGradient id="gRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8b7b"/><stop offset="1" stop-color="#d9301f"/></linearGradient>
+    <linearGradient id="gPaper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe8f3"/></linearGradient>
+    <linearGradient id="gPurple" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c59bff"/><stop offset="1" stop-color="#6a32c9"/></linearGradient>
+    <linearGradient id="gArrow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff07a"/><stop offset="1" stop-color="#ffb81f"/></linearGradient>
+  </defs>
+</svg>
+
+<div id="app">
+  <div id="probe"></div>
+  <div id="backdrop"></div>
+
+  <div id="stage">
+    <section class="scene title" id="titleScene" hidden aria-label="Écran titre">
+      <div class="art">
+        <div class="cam">
+          <img class="bg" id="titleBg" alt="">
+          <div class="logo-pos"><div class="logo-mask"><img id="logoImg" alt="Clash of Cab's"><span class="shine"></span></div></div>
+          <img class="char" id="char_l" alt="">
+          <img class="char" id="char_r" alt="">
+          <img class="char" id="char_w" alt="">
+          <div class="rays"></div>
+          <canvas class="fx" id="fxTitle" width="1672" height="941"></canvas>
+          <button class="play" id="playBtn" type="button" aria-label="Jouer">
+            <span class="play-hover"><span class="play-glow"></span><span class="play-mask"><img id="pillImg" alt=""><span class="shine"></span></span></span>
+          </button>
+        </div>
+      </div>
+      <button class="iconbtn" id="soundBtn" type="button" aria-label="Couper la musique">
+        <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+        <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M17 9l5 6M22 9l-5 6"/></svg>
+      </button>
+    </section>
+
+    <section class="scene town" id="townScene" hidden aria-label="Ta ville">
+      <div class="art" id="townArt">
+        <img class="bg" id="townBg" alt="Vue de dessus de la ville avec le Conseil de l'Ordre">
+        <svg class="plots" viewBox="0 0 1672 941">
+          <defs><radialGradient id="plusGlow"><stop offset="0" stop-color="#fffbe0" stop-opacity=".95"/><stop offset=".45" stop-color="#fff3a8" stop-opacity=".45"/><stop offset="1" stop-color="#fff3a8" stop-opacity="0"/></radialGradient></defs>
+          <polygon class="hit" id="hitCastle" role="button" tabindex="0" aria-label="Conseil de l'Ordre" points="352,250 430,160 560,98 700,38 830,96 948,228 972,382 806,468 640,500 470,424 350,334"/>
+          <polygon class="hit" id="hitDepot" role="button" tabindex="0" aria-label="Entrepôt" points="214,482 300,442 392,452 442,522 442,556 312,592 220,562"/>
+          <g class="plot" data-plot="A" role="button" tabindex="0" aria-label="Terrain libre"><polygon class="area" points="1118,118 1330,222 1112,320 918,215"/><circle class="halo" cx="1120" cy="216" r="50"/></g>
+          <g class="plot" data-plot="B" role="button" tabindex="0" aria-label="Terrain libre"><polygon class="area" points="1430,318 1645,437 1425,540 1218,415"/><circle class="halo" cx="1428" cy="428" r="50"/></g>
+          <g class="plot" data-plot="C" role="button" tabindex="0" aria-label="Terrain libre"><polygon class="area" points="1135,532 1337,665 1115,768 918,648"/><circle class="halo" cx="1128" cy="650" r="50"/></g>
+          <g class="plot" data-plot="D" role="button" tabindex="0" aria-label="Terrain libre"><polygon class="area" points="675,574 882,707 660,810 462,655"/><circle class="halo" cx="668" cy="690" r="50"/></g>
+        </svg>
+        <canvas class="fx" id="townCv" width="1672" height="941"></canvas>
+        <canvas class="fx" id="fxTown" width="1672" height="941"></canvas>
+        <div class="world" id="townDom"></div>
+      </div>
+    </section>
+
+    <section class="scene cabinet" id="cabScene" hidden aria-label="Ton cabinet">
+      <div class="art" id="cabArt">
+        <img class="bg" id="cabBg" alt="L'intérieur de ton cabinet">
+        <canvas class="fx" id="roomCv" width="1672" height="941"></canvas>
+        <div class="room-ui" id="roomUi">
+          <div id="slots"></div>
+          <div id="teamPanel" aria-label="Ton équipe"></div>
+          <button class="gbtn blue" id="btnExit" type="button" aria-label="Sortir du cabinet"></button>
+          <button class="gbtn" id="btnLeave" type="button" aria-label="Partir un mois" hidden></button>
+          <button class="gbtn green" id="btnSession" type="button"></button>
+          <button class="gbtn" id="btnCollect" type="button" hidden></button>
+          <button class="gbtn green" id="btnTalkTit" type="button" hidden></button>
+          <button class="gbtn" id="btnOfferTit" type="button" hidden></button>
+          <div id="dayCoins"></div>
+          <div id="dayCombo" hidden></div>
+          <div id="dayBar" hidden>
+            <div class="db-info"><span class="db-l">Patients</span><b id="dayCount">0 / 10</b><span class="db-l">Encaissé</span><b id="dayCash">0 €</b><span class="db-track"><span id="dayFill"></span></span></div>
+            <button class="gbtn green" id="btnCare" type="button"><span class="bs-txt"><span>Soigner</span><small id="careSub">Patient suivant !</small></span></button>
+          </div>
+          <div id="sessionBar" hidden><span class="sb-fill" id="sbFill"></span><span class="sb-col"><span class="sb-txt" id="sbTxt">Séance en cours</span><span class="sb-sub" id="sbSub">Tu peux sortir, la séance continue</span></span><span class="sb-time" id="sbTime">15 s</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene ordre" id="ordreScene" hidden aria-label="Le Conseil de l'Ordre">
+      <div class="art" id="ordreArt">
+        <img class="bg" id="ordreBg" alt="La salle du trône du conseil départemental de l'Ordre">
+        <canvas class="fx" id="ordreCv" width="1672" height="941"></canvas>
+        <div class="room-ui" id="ordreUi">
+          <div class="or-title">Conseil départemental de l'Ordre</div>
+          <div class="or-menu">
+            <button class="gbtn green" id="orTalk" type="button"><span>Parler à Pascale</span></button>
+            <button class="gbtn yellow" id="orQuiz" type="button"></button>
+            <button class="gbtn blue" id="orMail" type="button"></button>
+          </div>
+          <button class="gbtn blue" id="btnOrdreExit" type="button" aria-label="Sortir du château"></button>
+        </div>
+      </div>
+    </section>
+
+    <div class="art" id="hudLayer" hidden>
+      <img id="hudImg" alt="">
+      <div class="hud-v" id="hudLevel">1</div>
+      <div class="hud-v" id="hudXp"><span id="hudXpFill"></span><span id="hudXpText">0 / 100</span></div>
+      <div class="hud-v" id="hudMoney">5 000</div>
+      <div class="hud-v" id="hudPat">0</div>
+      <div class="hud-v" id="hudAss">0</div>
+      <div class="hud-v" id="hudPseudo" hidden></div>
+      <div class="hud-v" id="hudDate" hidden></div>
+      <button class="sbtn" id="btnQuests" type="button" aria-label="Quêtes"><img id="imgQuests" alt=""><span class="qbadge" id="qBadge">!</span></button>
+      <button class="gbtn" id="btnCompta" type="button" aria-label="Ma comptabilité" hidden></button>
+      <button class="gbtn" id="btnBoard" type="button" aria-label="Offres de remplacement" hidden></button>
+      <button class="ordre-chip" id="ordreChip" type="button" aria-label="Avis de l'Ordre" hidden></button>
+      <div class="form-chip" id="formChip" role="status" hidden></div>
+      <button class="sbtn" id="btnShop" type="button" aria-label="Boutique"><img id="imgShop" alt=""></button>
+      <button class="hs" id="btnGear" type="button" aria-label="Réglages" style="left:1582px;top:18px;width:73px;height:77px;border-radius:18px;background-position:-1242px -18px"></button>
+      <button class="hs" data-plus="money" type="button" aria-label="Gagner des euros" style="left:990px;top:25px;width:52px;height:60px;border-radius:12px;background-position:-650px -25px"></button>
+      <button class="hs" data-plus="patients" type="button" aria-label="Ta patientèle" style="left:1258px;top:28px;width:52px;height:62px;border-radius:12px;background-position:-918px -28px"></button>
+      <button class="hs" data-plus="staff" type="button" aria-label="Ton équipe" style="left:1505px;top:28px;width:53px;height:62px;border-radius:12px;background-position:-1165px -28px"></button>
+    </div>
+
+    <div id="ui">
+      <div id="dayEnd" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="panel de-panel" role="dialog" aria-modal="true" aria-labelledby="deTitle">
+          <div class="phead green"><h2 id="deTitle">Fin de journée</h2></div>
+          <div class="de-body">
+            <div class="de-row">
+              <div class="de-col de-me"><img id="deMeAv" alt=""><div class="de-lbl">Toi</div><div class="de-actes" id="deActes"></div><div class="de-val" id="deCash">0 €</div><div class="de-sub" id="deCashSub"></div></div>
+              <div class="de-arrow"><svg viewBox="0 0 120 40"><path d="M6 20 H100 M84 6 L106 20 L84 34" fill="none" stroke="#1a1f36" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <div class="de-col de-tit"><div class="de-chest" id="deChest"><span id="deChestIco"></span><img id="deTitAv" alt=""></div><div class="de-lbl" id="deTitName">Coffre du titulaire</div><div class="de-val neg" id="dePart">0 €</div><div class="de-sub" id="dePartSub"></div></div>
+              <div class="de-fly" id="deFly"></div>
+            </div>
+            <div class="de-net" id="deNet"></div>
+            <p class="de-expl" id="deExpl"></p>
+            <p class="de-month" id="deMonth"></p>
+          </div>
+          <div class="de-foot"><button type="button" class="btn btn-green" id="deOk">Voir mon mois</button></div>
+        </div>
+      </div>
+
+      <div id="shop" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="panel" role="dialog" aria-modal="true" aria-labelledby="shopTitle">
+          <div class="phead"><h2 id="shopTitle">Boutique</h2><button class="xbtn" type="button" aria-label="Fermer la boutique">✕</button></div>
+          <div class="tabs" id="shopTabs"></div>
+          <div class="cards-wrap">
+            <button class="sarrow l" id="sLeft" type="button" aria-label="Cartes précédentes" hidden></button>
+            <div class="cards" id="shopCards"></div>
+            <button class="sarrow r" id="sRight" type="button" aria-label="Cartes suivantes" hidden></button>
+          </div>
+          <div class="shop-foot" id="shopFoot"></div>
+        </div>
+      </div>
+
+      <div id="quests" class="modal" hidden>
+        <div class="dim" data-close="quests"></div>
+        <div class="panel" role="dialog" aria-modal="true" aria-labelledby="qTitle">
+          <div class="phead gold"><h2 id="qTitle">Quêtes</h2><button class="xbtn" type="button" data-close="quests" aria-label="Fermer">✕</button></div>
+          <div class="qbody" id="qBody"></div>
+        </div>
+      </div>
+
+      <div id="compta" class="modal" hidden>
+        <div class="dim" data-close="compta"></div>
+        <div class="panel" role="dialog" aria-modal="true" aria-labelledby="cTitle">
+          <div class="phead green"><h2 id="cTitle">Ma comptabilité</h2><button class="xbtn" type="button" data-close="compta" aria-label="Fermer">✕</button></div>
+          <div class="cbody">
+            <div class="ctabs" id="cTabs"></div>
+            <div class="cscroll" id="cScroll"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="settings" class="modal" hidden>
+        <div class="dim" data-close="settings"></div>
+        <div class="panel" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+          <div class="phead blue"><h2 id="setTitle">Réglages</h2><button class="xbtn" type="button" data-close="settings" aria-label="Fermer">✕</button></div>
+          <div class="sbody">
+            <div class="srow"><span>Musique</span><button class="tog" id="musicToggle" type="button" aria-pressed="true">Oui</button></div>
+            <div class="srow"><label for="musicVol">Volume</label><input id="musicVol" type="range" min="0" max="100" value="60"></div>
+            <div class="srow"><span>Effets sonores</span><button class="tog" id="sfxToggle" type="button" aria-pressed="true">Oui</button></div>
+            <div class="srow"><span>Voix</span><button class="tog" id="voiceToggle" type="button" aria-pressed="true">Oui</button></div>
+            <div class="srow"><span>Mode démo (3× plus rapide)</span><button class="tog" id="fastToggle" type="button" aria-pressed="false">Non</button></div>
+            <button class="btn btn-red" id="restartBtn" type="button">Recommencer la partie</button>
+            <button class="btn btn-yellow" id="toTitle" type="button">Retour à l'écran titre</button>
+            <p class="snote">Clash of Cab's · version 4 · projet pédagogique K5 · UE14 Gestion de cabinet</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="form" class="modal" hidden>
+        <div class="dim"></div>
+        <form class="panel" id="pseudoForm" role="dialog" aria-modal="true" aria-labelledby="formTitle" autocomplete="off">
+          <div class="phead blue"><h2 id="formTitle">Le nouveau diplômé</h2></div>
+          <div class="fbody">
+            <img id="formImg" alt="Le Conseil de l'Ordre">
+            <label class="flabel" for="pseudoInput">Comment s'appelle notre jeune kiné ?</label>
+            <input class="finput" id="pseudoInput" name="pseudo" maxlength="16" spellcheck="false" autocapitalize="words" placeholder="Son nom">
+            <div class="fchips" id="fChips"></div>
+            <div class="fhint">Dans la vraie vie, un kiné exerce sous son vrai nom : le pseudonyme est interdit par le code de déontologie.</div>
+            <div class="ferr" id="fErr" role="alert"></div>
+            <button class="btn btn-green" type="submit">C'est parti !</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="classify" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="qcard" role="dialog" aria-modal="true" aria-labelledby="clTitle">
+          <div class="qc-kick">Ta compta</div>
+          <div class="qc-title" id="clTitle"></div>
+          <div class="qc-art" id="clArt"></div>
+          <div class="qc-txt" id="clTxt"></div>
+          <div class="qc-opts" id="clOpts"></div>
+          <div class="qc-fb" id="clFb" hidden></div>
+          <div class="qc-btns" id="clBtns"></div>
+        </div>
+      </div>
+
+      <div id="month" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="msum" role="dialog" aria-modal="true" aria-labelledby="mRibbon">
+          <div class="rw-ribbon" id="mRibbon">Juillet 2027</div>
+          <div id="mLines"></div>
+          <p class="mnote" id="mNote"></p>
+          <button class="btn btn-green" id="mOk" type="button">Continuer</button>
+        </div>
+      </div>
+
+      <div id="board" class="modal" hidden>
+        <div class="dim" data-close="board"></div>
+        <div class="panel" role="dialog" aria-modal="true" aria-labelledby="bdTitle">
+          <div class="phead purple"><h2 id="bdTitle">Offres de remplacement</h2><button class="xbtn" type="button" data-close="board" aria-label="Fermer">✕</button></div>
+          <div class="bdbody" id="bdBody"></div>
+        </div>
+      </div>
+
+      <div id="finance" class="modal" hidden>
+        <div class="dim" data-close="finance"></div>
+        <div class="panel" role="dialog" aria-modal="true" aria-labelledby="fiTitle">
+          <div class="phead green"><h2 id="fiTitle">Plan de financement</h2><button class="xbtn" type="button" data-close="finance" aria-label="Fermer">✕</button></div>
+          <div class="fibody" id="fiBody"></div>
+        </div>
+      </div>
+
+      <div id="street" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="qcard street" role="dialog" aria-modal="true" aria-labelledby="stQ">
+          <div class="st-head"><canvas id="stCv" width="150" height="190"></canvas><div><div class="qc-kick">Un passant t'arrête</div><div class="st-name" id="stName"></div></div></div>
+          <div class="st-q" id="stQ"></div>
+          <div class="qc-opts" id="stOpts"></div>
+          <div class="qc-fb" id="stFb" hidden></div>
+          <div class="qc-btns" id="stBtns"></div>
+        </div>
+      </div>
+
+      <div id="contract" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="contract" role="dialog" aria-modal="true" aria-labelledby="ctName">
+          <div class="ct-head"><img id="ctAv" alt=""><div><div class="ct-kind" id="ctKind"></div><div class="ct-name" id="ctName"></div><div class="ct-pitch" id="ctPitch"></div></div></div>
+          <div class="ct-body" id="ctBody"></div>
+          <div class="ct-foot" id="ctFoot"></div>
+        </div>
+      </div>
+
+      <div id="letter" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="letter" role="dialog" aria-modal="true" aria-labelledby="ltOrg">
+          <div class="lt-head"><img id="ltImg" alt=""><div><div class="lt-org" id="ltOrg">Conseil départemental de l'Ordre des masseurs-kinésithérapeutes</div><div class="lt-sub" id="ltSub"></div></div></div>
+          <div class="lt-body" id="ltBody"></div>
+          <div class="lt-btns"><button class="btn btn-green" id="ltOk" type="button">Compris</button></div>
+        </div>
+      </div>
+
+      <div id="call" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="phone" id="phone" role="dialog" aria-modal="true" aria-labelledby="phName">
+          <div class="ph-top" id="phTop">Appel entrant…</div>
+          <div class="ph-av"><img id="phAv" alt=""></div>
+          <div class="ph-name" id="phName">Thomas</div>
+          <div class="ph-role" id="phRole">Ton remplaçant</div>
+          <div class="ph-msg" id="phMsg" hidden></div>
+          <div class="ph-opts" id="phOpts" hidden></div>
+          <div class="ph-fb" id="phFb" hidden></div>
+          <div class="ph-btns" id="phBtns"></div>
+        </div>
+      </div>
+
+      <div id="d2035" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="f2035" role="dialog" aria-modal="true" aria-labelledby="fTitle">
+          <div class="f-head">
+            <div class="f-cerfa">2035</div>
+            <div class="f-ttl" id="fTitle"></div>
+            <div class="f-steps" id="fSteps"></div>
+          </div>
+          <div class="f-body" id="fBody"></div>
+          <div class="f-foot" id="fFoot"></div>
+        </div>
+      </div>
+
+      <div id="reward" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="rw-rays"></div>
+        <div class="rw-card" role="dialog" aria-modal="true" aria-labelledby="rwTitle">
+          <div class="rw-ribbon" id="rwRibbon">Démarche validée !</div>
+          <div class="rw-art" id="rwArt"></div>
+          <div class="rw-title" id="rwTitle"></div>
+          <div class="rw-gains" id="rwGains"></div>
+          <div class="rw-xp" id="rwXp"></div>
+          <p class="rw-bonus" id="rwBonus"></p>
+          <button class="btn btn-green" id="rwOk" type="button">Super !</button>
+        </div>
+      </div>
+
+      <div id="levelup" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="lv-rays"></div>
+        <div class="lv" role="dialog" aria-modal="true" aria-labelledby="lvTitle">
+          <div class="lv-star"><svg viewBox="0 0 100 100"><path d="M50 5 L63 35 L95 38 L70 59 L78 92 L50 74 L22 92 L30 59 L5 38 L37 35 Z" fill="url(#gStar)" stroke="#0d1a33" stroke-width="5" stroke-linejoin="round"/><path d="M50 16 L58 37 L41 37 Z" fill="#fff" opacity=".35"/></svg><div class="lv-num" id="lvNum">2</div></div>
+          <div class="lv-title" id="lvTitle">Niveau supérieur !</div>
+          <div class="lv-sub" id="lvSub">Tu passes au niveau 2</div>
+          <div class="lv-unlock" id="lvUnlock"></div>
+          <button class="btn btn-green" id="lvOk" type="button">Continuer</button>
+        </div>
+      </div>
+
+      <div id="intro" hidden aria-label="Cinématique d'introduction">
+        <div class="in-frame">
+          <div class="in-slot" id="inSlotA"><img class="in-img" id="inImgA" alt=""></div>
+          <div class="in-slot" id="inSlotB"><img class="in-img" id="inImgB" alt=""></div>
+          <div class="in-rays" id="inRays"></div>
+          <div class="in-vignette"></div>
+        </div>
+        <div class="in-flash" id="inFlash"></div>
+        <div class="in-title" id="inTitle"><small>IFMK · de K2 à K5</small><b>Le nouveau diplômé</b></div>
+        <div class="in-stamp" id="inStamp">Diplômé !</div>
+        <div class="in-bar top"></div><div class="in-bar bot"></div>
+        <div class="in-cap" id="inCap"><div class="in-kick" id="inKick"></div><p class="in-text" id="inText"></p><div class="talk-next"></div></div>
+        <div class="in-dots" id="inDots"></div>
+        <button class="in-skip" id="inSkip" type="button">Passer ›</button>
+      </div>
+
+      <div id="guide" hidden><div class="spot"></div><div class="g-arrow" id="guideArrow"></div></div>
+
+      <div id="talk" hidden role="dialog" aria-label="Dialogue">
+        <div class="talk-dim"></div>
+        <img class="actor left" id="actorL" alt="">
+        <img class="actor right" id="actorR" alt="">
+        <div class="choices" id="choices" hidden></div>
+        <div class="talk-box" id="talkBox">
+          <div class="nameplate" id="nameplate"></div>
+          <p class="talk-text" id="talkText"></p>
+          <div class="talk-next"></div>
+        </div>
+      </div>
+
+      <canvas id="fxUI" width="1920" height="1080"></canvas>
+      <div id="flyLayer"></div>
+      <div id="toast" role="status"></div>
+      <div id="sr" class="sr-only" aria-live="polite"></div>
+    </div>
+
+    <div id="fade"></div>
+    <canvas id="clouds" width="1280" height="720"></canvas>
+
+    <div id="loader">
+      <div class="lrays"></div>
+      <img class="loader-logo" id="loaderLogo" alt="Clash of Cab's">
+      <div class="bar" role="progressbar" aria-label="Chargement" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar-fill" id="barFill"></div><div class="bar-label" id="barLabel">Chargement… 0 %</div></div>
+      <div class="start" id="startLabel">Touche l'écran pour commencer</div>
+      <div class="tip"><div class="tip-kicker">Astuce de gestion</div><div class="tip-text" id="tipText"></div></div>
+      <div class="credit">Projet pédagogique K5 · UE14 Législation et gestion de cabinet</div>
+    </div>
+  </div>
+
+  <div id="rotHint" hidden>Tourne ton téléphone pour jouer ↻</div>
+</div>
+</body>
+</html>

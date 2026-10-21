@@ -1,0 +1,37 @@
+/* Variables, mise en page de la scène 1920×1080 */
+/* Layout: one fixed 1920×1080 stage scaled uniformly to the screen (turned sideways on a phone held upright); blurred art fills the letterbox. Single game world, dark ground. */
+[hidden]{display:none!important}
+:root{
+  --ink:#0b1226;
+  --outline:#1a1f36;
+  --text:#1d2744;
+  --muted:#4a5878;
+  --mist:#e6f1ff;
+  --white:#ffffff;
+  --gold:#ffd43a;
+  --panel-1:#e2eefb;
+  --panel-2:#c3d8ee;
+  --paper:#fffdf6;
+  --paper-line:#e7dcc3;
+  --good:#2f9a12;
+  --bad:#d9301f;
+  --font-display:"Lilita One","Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;
+  --font-body:"Nunito","Segoe UI",system-ui,sans-serif;
+  --o-sm:0 2px 0 #0b1426,2px 0 0 #0b1426,-2px 0 0 #0b1426,0 -2px 0 #0b1426,1.5px 1.5px 0 #0b1426,-1.5px 1.5px 0 #0b1426,1.5px -1.5px 0 #0b1426,-1.5px -1.5px 0 #0b1426,0 4px 0 rgba(0,0,0,.3);
+  --o-lg:0 3px 0 #0b1426,3px 0 0 #0b1426,-3px 0 0 #0b1426,0 -3px 0 #0b1426,2.5px 2.5px 0 #0b1426,-2.5px 2.5px 0 #0b1426,2.5px -2.5px 0 #0b1426,-2.5px -2.5px 0 #0b1426,0 7px 0 rgba(0,0,0,.3);
+  color-scheme:dark;
+}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--ink);color:var(--white)}
+#app{position:fixed;inset:0;overflow:hidden;background:var(--ink);touch-action:manipulation;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;font-family:var(--font-body)}
+#probe{position:absolute;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+#backdrop{position:absolute;inset:-80px;background-color:var(--ink);background-size:cover;background-position:center;filter:blur(30px) brightness(.5) saturate(1.25);opacity:0;transition:opacity .8s}
+#backdrop.on{opacity:1}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden;background:var(--ink)}
+.scene{position:absolute;inset:0;overflow:hidden}
+.art{position:absolute;left:0;top:0;width:1672px;height:941px;transform:scale(1.148325,1.147715);transform-origin:0 0}
+.art img{position:absolute;display:block;max-width:none;-webkit-user-drag:none}
+.bg{left:0;top:0;width:1672px;height:941px;pointer-events:none}
+.fx{position:absolute;left:0;top:0;width:1672px;height:941px;pointer-events:none}
+button{font-family:inherit;-webkit-tap-highlight-color:transparent}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:5px solid var(--gold);outline-offset:4px}

@@ -1,0 +1,48 @@
+/* Barre du haut (HUD) et boutons de jeu */
+/* ---------- HUD (shared) ---------- */
+#hudLayer{position:absolute;left:0;top:0;width:1672px;height:941px;pointer-events:none;z-index:2}
+#hudLayer > *{pointer-events:auto}
+#hudLayer > .hud-v,#hudLayer > #hudImg{pointer-events:none}
+#hudImg{left:340px;top:0;width:1332px;height:112px}
+.hud-v{position:absolute;display:grid;place-items:center;font-family:var(--font-display);color:var(--white);text-shadow:var(--o-sm);white-space:nowrap;line-height:1}
+#hudLevel{left:375px;top:31px;width:42px;height:56px;font-size:36px;isolation:isolate}
+#hudLevel::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(#41c2fd,#22adfb 50%,#0c86e9);-webkit-mask:radial-gradient(closest-side,#000 72%,transparent);mask:radial-gradient(closest-side,#000 72%,transparent)}
+#hudXp{left:441px;top:41px;width:182px;height:39px;border-radius:10px;overflow:hidden;background:linear-gradient(#2c3749,#16273a);font-size:24px;isolation:isolate}
+#hudXpFill{position:absolute;left:0;top:0;bottom:0;width:0;z-index:-1;border-radius:9px;background:linear-gradient(#86e4ff,#2ba2f2 55%,#1577d2);box-shadow:inset 0 3px 0 rgba(255,255,255,.45);transition:width .7s cubic-bezier(.3,1.2,.5,1)}
+#hudMoney{left:852px;top:32px;width:137px;height:48px;border-radius:9px;background:linear-gradient(#2c3749,#16273a);font-size:32px}
+#hudMoney.neg{color:#ffb3a8}
+#hudMoney.pulse,#hudPat.pulse,#hudAss.pulse{animation:hudPulse .45s ease-out}
+@keyframes hudPulse{40%{transform:scale(1.15)}}
+#hudPat{left:1171px;top:60px;width:58px;height:28px;border-radius:6px;background:linear-gradient(#1f3248,#172a3d);font-size:24px}
+#hudAss{left:1423px;top:60px;width:48px;height:28px;border-radius:6px;background:linear-gradient(#1f3248,#172a3d);font-size:24px}
+#hudPseudo{left:446px;top:89px;height:28px;padding:0 14px;border-radius:14px;background:rgba(14,24,46,.84);border:2px solid rgba(255,255,255,.35);font-size:19px}
+#hudDate{left:856px;top:86px;height:38px;padding:0 14px 0 8px;gap:8px;grid-auto-flow:column;border-radius:12px;background:linear-gradient(#2c3749,#16273a);border:3px solid #0b1426;font-size:21px}
+#hudDate svg{width:26px;height:26px}
+.sbtn{position:absolute;padding:0;margin:0;border:0;background:none;cursor:pointer;transition:transform .18s cubic-bezier(.3,1.6,.5,1),filter .18s;outline:none}
+.sbtn img{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+.sbtn:hover,.sbtn:focus-visible{transform:scale(1.07);filter:brightness(1.08) drop-shadow(0 6px 6px rgba(0,0,0,.35))}
+.sbtn:active{transform:scale(.95)}
+.sbtn.nudge{animation:nudge 1.1s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+#btnQuests{left:28px;top:198px;width:121px;height:124px}
+#btnShop{left:1476px;top:775px;width:175px;height:146px}
+/* CSS-made game buttons that match the golden cutouts */
+.gbtn{position:absolute;padding:0;margin:0;cursor:pointer;box-sizing:border-box;border-radius:24px;border:5px solid #3a2208;background:linear-gradient(#ffd96a,#f3a522 55%,#c97710);box-shadow:inset 0 4px 0 rgba(255,255,255,.45),inset 0 -6px 0 rgba(120,60,0,.35),0 6px 0 rgba(0,0,0,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform .18s cubic-bezier(.3,1.6,.5,1),filter .18s;outline:none}
+.gbtn:hover,.gbtn:focus-visible{transform:scale(1.07);filter:brightness(1.06)}
+.gbtn:active{transform:scale(.95)}
+.gbtn svg{width:58px;height:58px;filter:drop-shadow(0 3px 0 rgba(0,0,0,.25))}
+.gbtn span{font:28px/1 var(--font-display);color:var(--white);text-shadow:var(--o-sm);letter-spacing:.01em}
+.gbtn.blue{border-color:#0b2a63;background:linear-gradient(#7cc4ff,#3b86e8 55%,#1f5bbf);box-shadow:inset 0 4px 0 rgba(255,255,255,.45),inset 0 -6px 0 rgba(0,30,90,.35),0 6px 0 rgba(0,0,0,.3)}
+.gbtn.green{border-color:#0d3a05;background:linear-gradient(#9ff06b,#45bb1d 55%,#2a8d10);box-shadow:inset 0 4px 0 rgba(255,255,255,.45),inset 0 -6px 0 rgba(10,60,0,.35),0 6px 0 rgba(0,0,0,.3)}
+.gbtn.red{border-color:#5d0d05;background:linear-gradient(#ff8b7b,#e3402e 55%,#b2200f)}
+.gbtn[disabled],.gbtn.off{filter:grayscale(.85) brightness(.85);cursor:not-allowed}
+.gbtn .gb-badge{position:absolute;right:-12px;top:-14px;min-width:40px;height:40px;padding:0 8px;box-sizing:border-box;border-radius:20px;border:3px solid var(--white);box-shadow:0 0 0 3px var(--outline);background:radial-gradient(circle at 40% 30%,#ff7a6a,#e0301f 60%,#a8160c);display:grid;place-items:center;font:24px/1 var(--font-display);color:var(--white);text-shadow:0 2px 0 #6b0d05}
+#btnCompta{left:28px;top:340px;width:121px;height:124px}
+.qbadge{position:absolute;left:81px;top:1px;width:38px;height:38px;border-radius:50%;box-sizing:border-box;border:3px solid var(--white);box-shadow:0 0 0 3px var(--outline);background:radial-gradient(circle at 40% 30%,#ff7a6a,#e0301f 60%,#a8160c);display:grid;place-items:center;font:26px/1 var(--font-display);color:var(--white);text-shadow:0 2px 0 #6b0d05;animation:badge 2.8s ease-in-out infinite}
+.qbadge svg{width:24px;height:24px}
+.qbadge.done{background:radial-gradient(circle at 40% 30%,#9cf27a,#38b81c 60%,#1d7a0c);animation:none}
+@keyframes badge{0%,66%,100%{transform:scale(1)}74%{transform:scale(1.3)}82%{transform:scale(1.04)}90%{transform:scale(1.16)}}
+.hs{position:absolute;padding:0;border:0;background-color:transparent;background-image:var(--hud-url);background-size:1332px 112px;background-repeat:no-repeat;cursor:pointer;transition:transform .18s cubic-bezier(.3,1.6,.5,1),filter .18s;outline:none}
+.hs:hover,.hs:focus-visible{transform:scale(1.08);filter:brightness(1.1) drop-shadow(0 5px 6px rgba(0,0,0,.35));z-index:3}
+.hs:active{filter:brightness(.88)}
+#hudLayer.locked .sbtn,#hudLayer.locked .gbtn,#hudLayer.locked .hs:not(#btnGear){filter:grayscale(.9) brightness(.7);pointer-events:none}

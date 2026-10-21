@@ -1,0 +1,21 @@
+/* ================= Content from the UE14 courses (gestion + déontologie) ================= */
+export const TIPS = [
+  "Remplaçant, assistant, titulaire : trois statuts libéraux, trois façons de travailler. Le remplacement, c'est l'idéal pour découvrir d'autres cabinets sans engagement.",
+  "Un remplaçant n'a aucune charge fixe… mais des revenus instables, et il reverse 20 à 30 % au titulaire.",
+  "La rétrocession versée par le remplaçant est une charge déductible : sur la 2035, elle vient en déduction des recettes.",
+  "La redevance d'un assistant n'est pas une rétrocession : elle est assimilée à un loyer (annexe 2035 A).",
+  "Conserve tes documents professionnels au minimum 6 ans : un contrôle fiscal peut remonter sur les 5 dernières années, plus l'année en cours.",
+  "Toute somme qui arrive sur ton compte pro est une recette jusqu'à preuve du contraire. Un prêt de 30 000 € doit être déclaré comme un prêt !",
+  "Le remboursement du capital d'un emprunt n'est pas déductible. Les intérêts, eux, le sont.",
+  "Micro-BNC : abattement forfaitaire de 34 % (305 € minimum), tant que tes recettes ne dépassent pas 77 700 € HT.",
+  "Un achat de moins de 500 € HT (598 € TTC) se déduit tout de suite. Au-delà, il s'amortit.",
+  "Les trajets domicile-cabinet sont professionnels jusqu'à 40 km. Au-delà… sauf pour les remplaçants !",
+  "Tout contrat est écrit et transmis au conseil départemental de l'Ordre, qui a un mois pour vérifier sa conformité.",
+  "Un doute sur un contrat ? Soumets le projet à l'Ordre : l'avis est gratuit.",
+  "Le remplaçant cote les actes avec SA carte CPS. Utiliser celle du titulaire est illégal.",
+  "Seul le collaborateur libéral peut se constituer une patientèle personnelle. Pas l'assistant !",
+  "Une clause de non-concurrence signée t'engage : lis tes contrats avant de signer.",
+  "ACRE : exonération totale sous 30 852 € de revenus, partielle jusqu'à 41 136 €, aucune au-delà.",
+  "La CPAM ne s'occupe que de l'administratif. Pour être conseillé, tourne-toi vers les syndicats.",
+  "En moyenne, un kiné dégage 46 000 € de bénéfice par an… pour 54 h de travail par semaine."
+];

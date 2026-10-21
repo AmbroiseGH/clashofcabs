@@ -1,0 +1,50 @@
+/* Ajustements (v3) qui surchargent les fichiers précédents */
+/* ---------- v3 additions ---------- */
+#fade{position:absolute;inset:0;z-index:48;background:#f3f8ff;opacity:0;pointer-events:none;transition:opacity .32s ease}
+#fade.on{opacity:1;pointer-events:auto}
+#townDom .bldhit,#townDom .bubble{pointer-events:auto}
+.tm{text-align:left;font-family:var(--font-display)}
+.qtab[disabled]{opacity:.5;cursor:not-allowed}
+.card-price small{font:800 18px/1 var(--font-body);color:#cfe1ff;text-shadow:none}
+#btnCompta svg{width:62px;height:62px}
+#btnExit svg,#btnLeave svg{width:60px;height:60px}
+.reg[disabled]{opacity:.55;cursor:not-allowed}
+.vbtn.recette.right,.vbtn.depense.right,.vbtn.immo.right,.vbtn.hors.right{filter:none}
+.letter .lt-body p{margin:0 0 12px}
+.msum #mLines{display:flex;flex-direction:column;gap:10px}
+.tm img,.aopt img,.ct-head img,#sessionBar img,.ph-av img,.lt-head img,.qc-art img{max-width:none;flex:none}
+.art .tm img{position:static}
+#sessionBar .sb-col{flex:1;overflow:hidden}
+#sessionBar .sb-time{white-space:nowrap;flex:none}
+.phone{top:40px;height:1000px}
+.phone > *{flex:none}
+.phone.talking .ph-top{margin-top:26px}
+.phone.talking .ph-av{margin-top:12px;width:96px;height:96px}
+.phone.talking .ph-av img{width:96px;height:96px;border-width:4px}
+.phone.talking .ph-name{margin-top:8px;font-size:36px}
+.phone.talking .ph-role{display:none}
+.phone .ph-msg{min-height:0;margin-top:18px;padding:16px 24px;font-size:26px}
+.phone .ph-opts{margin-top:14px;gap:10px}
+.phone .qopt{min-height:62px;font-size:26px;padding:6px 20px}
+.phone .qopt .key{width:46px;height:46px;font-size:26px}
+.phone .ph-fb{margin-top:14px;padding:12px 20px;font-size:22px}
+.phone .ph-btns{margin-bottom:26px}
+.phone.talking .ph-call{width:96px;height:96px}
+.frow{padding:6px 0;font-size:22px}
+.frow .fv{font-size:25px}
+.frow.tot{font-size:27px}
+.fsec h3{padding:10px 20px;font-size:26px}
+.form-grid{gap:16px}
+.f-body{padding:20px 36px}
+.card{height:586px}
+.card-art{height:232px}
+.card-price small{font:26px/1 var(--font-display);color:#cfe1ff;text-shadow:var(--o-sm);margin-left:-6px}
+.phone .qopt span{line-height:1.12}
+
+/* ---------- v4 additions ---------- */
+#btnBoard{left:28px;top:482px;width:121px;height:124px}
+#btnBoard svg{width:62px;height:62px}
+#btnBoard.nudge{animation:nudge 1.1s ease-in-out infinite}
+.ordre-chip{position:absolute;left:24px;top:624px;display:flex;align-items:center;gap:8px;height:52px;padding:0 16px 0 8px;border-radius:26px;border:4px solid var(--outline);background:linear-gradient(#e8eef8,#b9c8dd);font:22px/1 var(--font-display);color:var(--text);cursor:pointer;white-space:nowrap;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.ordre-chip svg{width:38px;height:38px}
+.ordre-chip.ready{background:linear-gradient(#fff6c9,#ffd75a);animation:nudge 1s ease-in-out infinite}

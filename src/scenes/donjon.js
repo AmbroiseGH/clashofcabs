@@ -61,7 +61,7 @@ export const Donjon = {
     d.pose = 'guard'; state.busy = false; this.talking = false; refreshGuide();
   },
   /* ---------- caught: jail, sermon, fine ---------- */
-  async jail({ loot, hits, buffer }) {
+  async jail({ loot, hits, buffer, free }) {
     state.busy = true; this.buf = buffer;
     await Fade.transition(async () => { this.show(true); });
     this.playOutro();
@@ -71,13 +71,15 @@ export const Donjon = {
     /* Pascale comes down the stairs */
     const P = this.person('pascale', ...SPOT.stairs, 'idle'); P.alpha = 0; this.people.push(P);
     await this.walk(P, [[SPOT.stairs[0], 820], SPOT.pascale]); P.pose = 'point'; P.flip = false;
-    const priors = (G.fraud && G.fraud.convictions) || 0;
+    const priors = free ? 0 : (G.fraud && G.fraud.convictions) || 0;
     await Talk.open(); const right = await SCRIPTS.jailSermon(loot, priors); await Talk.close(true);
-    if (right) await addXP(right * 5);
+    if (right && !free) await addXP(right * 5);
     const fine = FRAUDE.jailFine + FRAUDE.jailFineStep * priors;
-    await this.fineModal(loot, hits, fine);
-    G.money -= fine; book('Amende pour fraude (cachot de l’Ordre)', -fine, 'hors', 'penalite');
-    G.fraud = Object.assign(G.fraud || {}, { convictions: priors + 1, pending: null }); persist(); HUD.tweenMoney();
+    await this.fineModal(loot, hits, fine, free);
+    if (!free) {
+      G.money -= fine; book('Amende pour fraude (cachot de l’Ordre)', -fine, 'hors', 'penalite');
+      G.fraud = Object.assign(G.fraud || {}, { convictions: priors + 1, pending: null }); persist(); HUD.tweenMoney();
+    }
     AudioSys.coin();
     /* freedom! */
     this.cage.target = -760; this.clang(0.5);
@@ -89,16 +91,17 @@ export const Donjon = {
     await Fade.transition(async () => { $('donjonScene').hidden = true; Castle.show(); });
     state.busy = false;
     if (AudioSys.playing && !AudioSys.src) AudioSys.play(AudioSys.theme, 1.5);
-    toast(frSpace(`Tu es libre… et plus léger de <b>${fmt(fine)} €</b>. La fraude ne paie pas !`), 4200);
+    toast(frSpace(free ? `Mode libre : ta partie n'a pas bougé. Mais en vrai, c'était <b>${fmt(fine)} €</b> d'amende !` : `Tu es libre… et plus léger de <b>${fmt(fine)} €</b>. La fraude ne paie pas !`), 4200);
     refreshGuide();
   },
-  fineModal(loot, hits, fine) {
+  fineModal(loot, hits, fine, free) {
     return new Promise((resolve) => {
       $('jfRows').innerHTML = frSpace(`
         <div class="jf-row"><span>Séances fictives facturées<small>${hits} séance${hits > 1 ? 's' : ''} jamais faite${hits > 1 ? 's' : ''}</small></span><b>${fmt(loot)} €</b></div>
         <div class="jf-row"><span>Saisies par la Sécu<small>Tu ne touches rien de tout ça</small></span><b class="neg">−${fmt(loot)} €</b></div>
-        <div class="jf-row big"><span>Amende pour sortir du cachot<small>${(G.fraud && G.fraud.convictions) ? 'Récidive : l’amende augmente !' : 'Première fraude'}</small></span><b class="neg">−${fmt(fine)} €</b></div>`);
+        <div class="jf-row big"><span>Amende pour sortir du cachot<small>${free ? 'Mode libre : rien n’est débité' : (G.fraud && G.fraud.convictions) ? 'Récidive : l’amende augmente !' : 'Première fraude'}</small></span><b class="neg">−${fmt(fine)} €</b></div>`);
       $('jfNote').textContent = frSpace(FRAUDE.course);
+      $('jfPay').textContent = free ? 'Sortir du cachot' : 'Payer et sortir';
       $('jailFine').hidden = false; AudioSys.stamp();
       $('jfPay').onclick = () => { AudioSys.tap(); $('jailFine').hidden = true; resolve(); };
     });

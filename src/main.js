@@ -8,7 +8,6 @@ import { G, PRE_DATE, freshSave, jEntry, persist, replaceSave, state, working } 
 import { $, TEST, frSpace, wait } from './core/utils.js';
 import { TIPS } from './data/tips.js';
 import { TitleFX, TownFX, UIFX, sampleOpaque } from './fx/effects.js';
-import { PlayAnim } from './fx/play-button.js';
 import { Clouds, Fade } from './fx/transitions.js';
 import { Board } from './game/board.js';
 import { Build } from './game/build.js';
@@ -45,7 +44,7 @@ Object.assign(SCRIPTS, CONFRERE_SCRIPTS, CASTLE_SCRIPTS, DONJON_SCRIPTS); let la
 function frame(t) {
   const dt = Math.min(0.05, (t - (lastT || t)) / 1000); lastT = t;
   saveT += dt; if (saveT > 4) { saveT = 0; if (state.started && (G.sess.state === 'run' || G.cab.build || G.letters.length)) persist(); }
-  if (state.screen === 'title') { TitleFX.update(dt); PlayAnim.update(dt); }
+  if (state.screen === 'title') TitleFX.update(dt);
   else if (state.screen === 'town') { TownFX.update(dt); Town.update(dt); Cam.update(dt); }
   else if (state.screen === 'cabinet') Room.update(dt);
   else if (state.screen === 'ordre') Castle.update(dt);
@@ -154,8 +153,8 @@ async function boot() {
     ...Object.keys(ASSETS).filter((k) => /_(happy|think|scared)$|^goblin$|^card_|^intro\d|^ic_table|^ic_electro/.test(k)).map((k) => loadImg(k))
   ]);
   TitleFX.logoPts = sampleOpaque($('logoImg'), { x: 532, y: 6, w: 606, h: 312 }, 260, 240, 170);
-  TitleFX.pillPts = sampleOpaque($('pillImg'), { x: 600, y: 690, w: 470, h: 165 }, 80, 240, 200);
-  PlayAnim.init(); $('frLogo').src = URLS.qte_logo; $('frReadyLogo').src = URLS.qte_logo; $('frGaugeImg').src = URLS.qte_gauge; $('frBg').src = URLS.qte_night;
+  TitleFX.pillPts = sampleOpaque($('pillImg'), { x: 600, y: 710, w: 471, h: 123 }, 80, 240, 200);
+  $('frLogo').src = URLS.qte_logo; $('frReadyLogo').src = URLS.qte_logo; $('frGaugeImg').src = URLS.qte_gauge; $('frBg').src = URLS.qte_night;
   markDecoded();
   await wait(250);
   const loader = $('loader'); loader.classList.add('ready'); setBackdrop('title');

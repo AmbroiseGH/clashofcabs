@@ -3,12 +3,15 @@
    et de « UE14 CM1 - Législation et Gestion de cabinet » (dépenses somptuaires, repas d'affaires, pénalités). */
 export const FRAUDE = {
   acte: 35,             // ce que rapporte une séance fictive (une note réussie)
-  missRisk: 0.012,      // chaque note ratée fait monter la jauge de risque
-  ghostRisk: 0.003,     // chaque appui dans le vide aussi (un peu)
+  missRisk: 0.004,      // chaque note ratée fait monter la jauge de risque
+  ghostRisk: 0.001,     // chaque appui dans le vide aussi (un peu)
+  riskCap: 0.97,        // la jauge ne se remplit à 100 % qu'à la fin de la chanson : la Sécu arrive au dernier accord
   jailFine: 5000,       // amende pour sortir du cachot (augmente à chaque récidive)
   jailFineStep: 2500,
   controlFine: 3000,    // pénalité si un contrôle te rattrape le mois suivant
-  rules: "Facture des séances… <b>qui n'ont jamais eu lieu</b> ! Appuie sur les flèches <b>← ↓ ↑ →</b> (ou touche les boutons) quand la lumière arrive dessus. Chaque note réussie = une séance fictive à <b>{acte} €</b>. Mais la <b>jauge de risque</b> monte avec la musique, et chaque raté attire l'attention… Arrête-toi à temps !",
+  rules: "Facture des séances… <b>qui n'ont jamais eu lieu</b> ! Appuie sur les flèches <b>← ↓ ↑ →</b> (ou touche les boutons) quand la lumière arrive dessus. Chaque note réussie = une séance fictive à <b>{acte} €</b>. Mais la <b>jauge de risque</b> monte avec la musique et chaque raté la fait grimper : à la fin de la chanson, la Sécu débarque… Arrête-toi à temps !",
+  freeNote: "<b>Mode libre</b> : rien ne compte pour ta partie (ni gains, ni amende).",
+  freeEnd: "Mode libre : rien n'est ajouté à ta partie. En vrai, l'Assurance maladie pourrait te contrôler et te demander de tout rembourser.",
   course: "Rappel du cours : ajouter des séances à des patients qui ne les ont pas faites, c'est une fraude. Ta responsabilité « sécurité sociale » est engagée : indemnitaire et/ou pénale.",
   honestToast: "Tu restes honnête : bravo ! Facturer des séances qui n'ont pas eu lieu, c'est une fraude (responsabilité indemnitaire et/ou pénale).",
   escapeNote: "Personne ne t'a vu… pour l'instant. L'Assurance maladie peut te contrôler et te demander de tout rembourser.",

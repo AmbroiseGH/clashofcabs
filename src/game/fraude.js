@@ -51,14 +51,16 @@ export const Fraude = {
     return Room.cab && G.sess.state === 'run' && G.sess.where === Room.cab && f.m !== G.months && !this.active;
   },
   /* ---------- the ready screen ---------- */
-  open() {
+  /* free = launched from the settings: same mini-game, but nothing counts for the save */
+  open(free = false) {
     if (blocked() || this.active) return;
     AudioSys.tap(); hideToast();
-    this.active = true; this.phase = 'ready';
+    this.active = true; this.phase = 'ready'; this.free = !!free;
     const root = $('fraude'); root.hidden = false; root.classList.remove('caught', 'playing', 'ended');
     $('frReady').hidden = false; $('frEnd').hidden = true; $('frCount').textContent = '';
     $('frGo').disabled = false; $('frGo').querySelector('span').textContent = 'Lancer la fraude';
-    $('frRules').innerHTML = frSpace(FRAUDE.rules.replace('{acte}', fmt(FRAUDE.acte)));
+    $('frRules').innerHTML = frSpace(FRAUDE.rules.replace('{acte}', fmt(FRAUDE.acte)) + (this.free ? `<br><span class="fr-free">${FRAUDE.freeNote}</span>` : ''));
+    $('frHonest').textContent = this.free ? 'Retour' : 'Rester honnête';
     this.resetPlay(); this.renderHud(); this.drawStatic();
     this.load();
   },
@@ -69,7 +71,7 @@ export const Fraude = {
   },
   honest() {
     AudioSys.tap(); this.close();
-    toast(frSpace(FRAUDE.honestToast), 3600);
+    if (!this.free) toast(frSpace(FRAUDE.honestToast), 3600);
   },
   close() {
     $('fraude').hidden = true; this.active = false; this.phase = 'idle'; this.stopAudio(0.3);
@@ -91,7 +93,7 @@ export const Fraude = {
     AudioSys.unlock();
     const go = $('frGo'); go.disabled = true;
     if (!this.buffer && !(TEST && TEST.fraude)) { go.querySelector('span').textContent = 'Chargement…'; await Promise.race([this.load(), wait(9000)]); }
-    G.fraud = Object.assign(G.fraud || {}, { m: G.months, tries: ((G.fraud && G.fraud.tries) || 0) + 1 }); persist();
+    if (!this.free) { G.fraud = Object.assign(G.fraud || {}, { m: G.months, tries: ((G.fraud && G.fraud.tries) || 0) + 1 }); persist(); }
     $('frReady').hidden = true; $('fraude').classList.add('playing');
     AudioSys.stopCurrent(0.4);
     this.resetPlay();
@@ -182,8 +184,9 @@ export const Fraude = {
         break;
       }
       if (TEST && TEST.fraudeBot) for (let k = this.cursor; k < this.notes.length && this.notes[k].t <= now; k++) if (!this.notes[k].st && Math.random() < TEST.fraudeBot) this.judge(this.notes[k], 0.02);
+      /* the gauge fills with the music; misses push it up, but Damien only shows up when the song is over */
       const base = clamp(now / SONG.riskEnd, 0, 1);
-      this.risk = clamp(base + this.misses * FRAUDE.missRisk + this.ghosts * FRAUDE.ghostRisk, 0, 1);
+      this.risk = now >= SONG.riskEnd ? 1 : Math.min(FRAUDE.riskCap, base + this.misses * FRAUDE.missRisk + this.ghosts * FRAUDE.ghostRisk);
       if (this.risk >= 1) this.caught();
     }
     this.riskShown += (this.risk - this.riskShown) * Math.min(1, dt * 6);
@@ -237,7 +240,7 @@ export const Fraude = {
       this.lineIdx = i;
       const cur = L[i], nxt = L[i + 1];
       const len = cur ? cur.w.map((x) => x[1]).join(' ').length : 0;
-      $('frL1').className = 'fr-l1' + (cur && cur.k === 'chorus' ? ' chorus' : '') + (len > 52 ? ' xl' : len > 36 ? ' l' : '');
+      $('frL1').className = 'fr-l1' + (cur && (cur.k === 'chorus' || cur.k === 'final') ? ' chorus' : '') + (len > 52 ? ' xl' : len > 36 ? ' l' : '');
       $('frL1').innerHTML = cur ? cur.w.map(([t, w], j) => `<span data-j="${j}">${esc(w)}</span>`).join(' ') : '';
       $('frL2').textContent = nxt ? nxt.w.map((x) => x[1]).join(' ') : '';
       if (cur) { const el = $('frL1'); el.classList.remove('in'); void el.offsetWidth; el.classList.add('in'); }
@@ -412,13 +415,13 @@ export const Fraude = {
     this.phase = 'ended'; $('fraude').classList.remove('playing', 'alarm'); $('fraude').classList.add('ended');
     if (this.src) { const ctx = AudioSys.ctx, t = ctx.currentTime; try { this.src.playbackRate.setValueAtTime(1, t); this.src.playbackRate.linearRampToValueAtTime(0.25, t + 0.5); } catch (e) {} this.stopAudio(0.55); }
     const loot = this.cash, risk = Math.round(this.risk * 100);
-    if (loot > 0) {
+    if (loot > 0 && !this.free) {
       G.money += loot; book('Séances fictives facturées (fraude, à rembourser)', loot, 'hors', 'fraude');
       G.fraud.pending = { loot, risk: this.risk, m: G.months }; persist(); HUD.tweenMoney();
     }
     $('frEndTitle').textContent = loot ? 'Tu t’arrêtes à temps… ?' : 'Fraude annulée';
     $('frEndBody').innerHTML = frSpace(loot
-      ? `Tu empoches <b>${fmt(loot)} €</b> de séances fictives (${this.hits} séance${this.hits > 1 ? 's' : ''} jamais faite${this.hits > 1 ? 's' : ''}). Risque d'être repéré : <b>${risk} %</b>.<br><small>${esc(FRAUDE.escapeNote)}</small>`
+      ? `Tu empoches <b>${fmt(loot)} €</b> de séances fictives (${this.hits} séance${this.hits > 1 ? 's' : ''} jamais faite${this.hits > 1 ? 's' : ''}). Risque d'être repéré : <b>${risk} %</b>.<br><small>${esc(this.free ? FRAUDE.freeEnd : FRAUDE.escapeNote)}</small>`
       : `Aucune séance fictive facturée. ${esc(FRAUDE.honestToast)}`);
     $('frEnd').hidden = false;
   },
@@ -440,7 +443,7 @@ export const Fraude = {
     state.busy = false;
     const loot = this.cash, hits = this.hits;
     $('fraude').hidden = true; this.active = false; this.phase = 'idle';
-    await Donjon.jail({ loot, hits, buffer: this.buffer });
+    await Donjon.jail({ loot, hits, buffer: this.buffer, free: this.free });
   },
   drawDamien(c, dt) {
     const d = this.damien; d.t += dt;
@@ -487,6 +490,11 @@ $('frGo').addEventListener('click', () => Fraude.start());
 $('frHonest').addEventListener('click', () => Fraude.honest());
 $('frStop').addEventListener('click', () => Fraude.stop());
 $('frEndOk').addEventListener('click', () => Fraude.endOk());
+$('setFraude').addEventListener('click', () => {
+  if (state.busy || Fraude.active) return;
+  $('settings').hidden = true;
+  Fraude.open(true);
+});
 $('frPads').addEventListener('pointerdown', (e) => { const b = e.target.closest('[data-l]'); if (!b) return; e.preventDefault(); Fraude.hit(+b.dataset.l); });
 addEventListener('keydown', (e) => {
   if (!Fraude.active || Fraude.phase !== 'play' || e.repeat) return;

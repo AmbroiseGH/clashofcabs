@@ -3,7 +3,7 @@ import { $ } from './utils.js';
 /* ================= Assets ================= */
 export const ASSETS = {
   logo_clean: ['assets/logo_clean.webp', 184e3],
-  title: ['assets/title2.webp', 285e3], play_anim: ['assets/play_anim.webp', 300e3], logo: ['assets/logo.webp', 86e3], pill: ['assets/pill.webp', 12e3],
+  title: ['assets/title.webp', 430e3], logo: ['assets/logo.webp', 86e3], pill: ['assets/pill.webp', 12e3],
   char_l: ['assets/char_l.webp', 87e3], char_w: ['assets/char_w.webp', 54e3], char_r: ['assets/char_r.webp', 53e3],
   town2: ['assets/town3.webp', 355e3], btnshop: ['assets/btnshop.webp', 9e3], btnquests: ['assets/btnquests.webp', 7e3],
   card_ordre: ['assets/card_ordre.webp', 79e3], card_cpam: ['assets/card_cpam.webp', 52e3],

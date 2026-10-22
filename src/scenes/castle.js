@@ -3,6 +3,7 @@ import { G, persist, state } from '../core/save.js';
 import { $, AH, AW, randi } from '../core/utils.js';
 import { Fade } from '../fx/transitions.js';
 import { Letters } from '../game/letters.js';
+import { Donjon } from './donjon.js';
 import { charWalk, drawChar, drawShadow } from '../render/sprites.js';
 import { setBackdrop, showTown } from './scenes.js';
 import { SCRIPTS } from '../story/scripts.js';
@@ -42,7 +43,7 @@ export const Castle = {
   },
   show() {
     state.screen = 'ordre'; Guide.hide();
-    for (const id of ['titleScene', 'townScene', 'cabScene']) $(id).hidden = true;
+    for (const id of ['titleScene', 'townScene', 'cabScene', 'donjonScene']) $(id).hidden = true;
     $('ordreScene').hidden = false; $('hudLayer').hidden = false; setBackdrop('ordre_in');
     this.pas = { x: CASTLE.throne[0], y: CASTLE.throne[1], pts: [], pose: 'throne', row: 3, flip: false, t: 0 };
     this.me = { x: CASTLE.door[0], y: CASTLE.door[1], pts: [CASTLE.doorIn.slice(), CASTLE.meet.slice()], pose: 'idle', row: 0, flip: false, t: 0, alpha: 0 };
@@ -129,6 +130,7 @@ export const Castle = {
 };
 $('btnOrdreExit').addEventListener('click', () => Castle.exit());
 $('orTalk').addEventListener('click', () => Castle.talk(false));
+$('orDonjon').addEventListener('click', () => Donjon.visit());
 $('orQuiz').addEventListener('click', () => Castle.quiz());
 $('orMail').addEventListener('click', () => { if (blocked()) return; AudioSys.tap(); if (Letters.ready().length) Letters.announce(); else toast(G.letters.length ? `Le conseil étudie ton contrat : réponse dans <b>${Math.ceil(G.letters[0].t)} s</b>.` : "Aucun contrat à l'étude. Un doute sur un contrat ? Demande l'avis de l'Ordre depuis le contrat : c'est gratuit !"); });
 

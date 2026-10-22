@@ -5,6 +5,7 @@ import { $, deMois, esc, fmt, frSpace, monthName, nextMonth, signed, wait } from
 import { ECO } from '../data/economy.js';
 import { ITEMS } from '../data/shop-items.js';
 import { PLOTS, TOWN_CABS } from '../data/town-map.js';
+import { Fraude } from './fraude.js';
 import { Career } from './career.js';
 import { Quests } from './quests.js';
 import { assistH, loanPayment, mathieuSlots, rendement, titSlots } from './session.js';
@@ -86,6 +87,7 @@ export const Month = {
     if (G.pendingDecl) await Decl.run(G.pendingDecl);
     await this.annual();
     await Career.afterMonth();
+    await Fraude.monthCheck();
     state.busy = false;
     Town.updateDom(); refreshGuide();
   },

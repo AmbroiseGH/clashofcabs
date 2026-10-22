@@ -26,6 +26,9 @@ Le jeu n'a **aucune étape de compilation** : les fichiers du dépôt sont exact
 | Les appels de Mathieu (questions cliniques) | `src/data/calls.js` |
 | Les dialogues de l'histoire | `src/story/scripts.js` (confrères : `src/story/confreres.js`, Ordre : `src/scenes/castle.js`) |
 | La cinématique d'intro | `src/scenes/intro.js` |
+| Le mini-jeu « Fraude à la Sécu » (montant par séance, amendes, risque, textes) | `src/data/fraude.js` |
+| Les paroles synchronisées et les notes du mini-jeu | `src/data/fraude-song.js` |
+| Le cachot de l'Ordre (sermon, quiz, Damien) | `src/scenes/donjon.js` |
 | Une image ou un son | `assets/` (garder le même nom de fichier, voir plus bas) |
 | L'apparence (couleurs, tailles, positions) | `styles/` |
 

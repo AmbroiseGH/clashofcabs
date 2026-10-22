@@ -46,6 +46,7 @@ const CHARS = {
   thomas: { walk: { sheet: 'c27', right: 0, left: 1, back: 2, fps: 11 }, idle: ['c27', 3], talk: ['c27', 4, 0], happy: ['c27', 4, 1], think: ['c27', 4, 2], wave: ['c27', 4, 3], coach: ['c27', 3] },
   julien: { walk: { sheet: 'c28', right: 0, left: 1, back: 2, fps: 11 }, idle: ['c28', 4, 0], talk: ['c28', 4, 4], wave: ['c28', 4, 5], think: ['c28', 4, 6], happy: ['c28', 4, 8], point: ['c28', 4, 10], read: ['c28', 4, 11], scared: ['c28', 4, 12], coach: ['c28', 4, 3] },
   etienne: { walk: { sheet: 'c29', right: 0, left: 1, back: 2, fps: 8 }, idle: ['c29', 3], wave: ['c29', 4, 1], happy: ['c29', 4, 2], talk: ['c29', 4, 3], think: ['c29', 4, 4], tablet: ['c29', 4, 5], massage: ['c29', 4, 6, 3], coach: ['c29', 4, 3], cheer: ['c29', 4, 9] },
+  damien: { walk: { sheet: 'c31', front: 0, back: 1, left: 2, fps: 14 }, idle: ['c31', 3, 0], point: ['c31', 3, 1], laugh: ['c31', 3, 2], think: ['c31', 3, 3], shock: ['c31', 3, 4], guard: ['c31', 3, 5], slash: ['c31', 3, 6], jump: ['c31', 3, 7], dizzy: ['c31', 4, 0], kneel: ['c31', 4, 1], win: ['c31', 4, 2], cheer: ['c31', 4, 3], dash: ['c31', 4, 4, 2], spin: ['c31', 4, 6] },
   pascale: { walk: { sheet: 'c30', right: 0, left: 1, back: 2, front: 3, fps: 9 }, idle: ['c30', 4, 0], wave: ['c30', 4, 1], think: ['c30', 4, 2], happy: ['c30', 4, 3], point: ['c30', 4, 4], talk: ['c30', 4, 4], clip: ['c30', 4, 5], throne: ['c30', 4, 6] }
 };
 const rowLen = (sheet, row) => { const m = META.c[sheet]; return (m && m.rn && m.rn[row]) || 4; };

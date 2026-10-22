@@ -15,6 +15,7 @@ const VOICES = {
   thomas: { base: 175, wave: 'sawtooth', fm: 1.12, spread: 0.2, dur: 0.075, vol: 0.5 },
   julien: { base: 98, wave: 'sawtooth', fm: 0.8, spread: 0.1, dur: 0.11, vol: 0.62 },
   etienne: { base: 158, wave: 'triangle', fm: 1.0, spread: 0.24, dur: 0.08, vol: 0.62 },
+  damien: { base: 132, wave: 'sawtooth', fm: 0.92, spread: 0.18, dur: 0.085, vol: 0.6 },
   patient: { base: 230, wave: 'triangle', fm: 1.1, spread: 0.22, dur: 0.08, vol: 0.6 }
 };
 const VOWELS = { a: [800, 1250], e: [470, 1900], i: [310, 2300], o: [480, 900], u: [330, 820] };

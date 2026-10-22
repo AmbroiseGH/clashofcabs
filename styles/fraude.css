@@ -104,11 +104,12 @@ fr-lyrics-placeholder{}
 .jf-note{margin:6px 0 0;font:800 23px/1.35 var(--font-body);color:var(--muted)}
 .jf-foot{position:absolute;left:0;right:0;bottom:0;height:140px;display:grid;place-items:center}
 
-/* ---------- nouveau bouton Play de l'écran titre ---------- */
-.play{border-radius:40px}
-.play-sprite{position:absolute;pointer-events:none;background-repeat:no-repeat}
-.play-hover .play-mask,.play-hover .play-glow{display:none}
-.title.intro .play{animation:pop .8s ease-out 1.55s both}
 @media (prefers-reduced-motion: reduce){#btnFraud,.fr-logo,.fr-gfill,#frGo{animation:none!important}}
 .or-menu #orDonjon{justify-content:center}
 .or-menu{top:330px}
+/* accès au mini-jeu depuis les réglages (mode libre) */
+.btn-fraude{background:linear-gradient(#e07bff,#8a2fd6)}
+.fr-free{display:inline-block;margin-top:10px;padding:4px 14px;border-radius:12px;background:rgba(255,215,60,.18);color:#ffe27a}
+#settings .sbody{gap:16px}
+#settings .sbody .btn{flex:none}
+#settings .panel{top:36px;height:1008px}

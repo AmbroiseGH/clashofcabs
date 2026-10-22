@@ -1,3 +1,4 @@
+import { Fraude } from '../game/fraude.js';
 import { AudioSys } from '../audio/audio.js';
 import { IMG, URLS } from '../core/assets.js';
 import { G, state, workplace } from '../core/save.js';
@@ -266,6 +267,7 @@ export const Room = {
       coin.innerHTML = day ? `${ICON.coin}<span class="bs-txt"><span>Faire les comptes</span><small>Ta journée est terminée !</small></span>` : `${ICON.coin}<span class="bs-txt"><span>Encaisser le mois</span><small>Ta séance est terminée !</small></span>`;
     }
     Day.renderUi();
+    const fb = $('btnFraud'), fo = mine && Fraude.canOffer(); if (fb.hidden === fo) fb.hidden = !fo;
     const vm = this.visitMode(), tb = $('btnTalkTit'), ob = $('btnOfferTit');
     tb.hidden = !vm; ob.hidden = !vm || !Board.offerAt(this.cab);
     if (vm && tb.dataset.cab !== this.cab) { tb.dataset.cab = this.cab; const C = TOWN_CABS[this.cab]; tb.innerHTML = `<img src="${URLS['av_' + C.who]}" alt=""><span>Parler à ${esc(C.first)}</span>`; ob.innerHTML = `${ICON.board}<span>Voir son offre</span>`; }
@@ -285,3 +287,5 @@ $('teamPanel').addEventListener('click', (e) => {
   if (w === 'host') Confrere.talk();
   if (w === 'guest') toast(`Tu es en visite chez ${esc(TOWN_CABS[Room.cab].first)}. Ici, ce ne sont pas tes patients !`);
 });
+
+$('btnFraud').addEventListener('click', () => { if (blocked()) return; Fraude.open(); });

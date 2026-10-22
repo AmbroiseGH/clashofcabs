@@ -24,7 +24,7 @@ export const titleScene = $('titleScene'), townScene = $('townScene'), cabScene 
 export function setBackdrop(key) { backdrop.style.backgroundImage = `url("${URLS[key]}")`; backdrop.classList.add('on'); }
 export function showTitle() {
   state.screen = 'title'; Guide.hide();
-  townScene.hidden = true; cabScene.hidden = true; $('ordreScene').hidden = true; $('hudLayer').hidden = true; titleScene.hidden = false; setBackdrop('title');
+  townScene.hidden = true; cabScene.hidden = true; $('ordreScene').hidden = true; $('donjonScene').hidden = true; $('hudLayer').hidden = true; titleScene.hidden = false; setBackdrop('title');
   TitleFX.alpha = 0; TitleFX.setup();
   titleScene.classList.remove('idle', 'intro'); void titleScene.offsetWidth; titleScene.classList.add('intro');
   const cam = titleScene.querySelector('.cam');
@@ -35,13 +35,13 @@ export function showTitle() {
 }
 export function showTown() {
   state.screen = 'town'; state.roomCab = null;
-  titleScene.hidden = true; cabScene.hidden = true; $('ordreScene').hidden = true; townScene.hidden = false; $('hudLayer').hidden = false; setBackdrop('town2');
+  titleScene.hidden = true; cabScene.hidden = true; $('ordreScene').hidden = true; $('donjonScene').hidden = true; townScene.hidden = false; $('hudLayer').hidden = false; setBackdrop('town2');
   Town.reset(); HUD.render(); Hire.check();
 
 }
 function showCabinet(cab) {
   state.screen = 'cabinet'; state.roomCab = cab;
-  titleScene.hidden = true; townScene.hidden = true; $('ordreScene').hidden = true; cabScene.hidden = false; $('hudLayer').hidden = false; setBackdrop('cab_in');
+  titleScene.hidden = true; townScene.hidden = true; $('ordreScene').hidden = true; $('donjonScene').hidden = true; cabScene.hidden = false; $('hudLayer').hidden = false; setBackdrop('cab_in');
   Town.offerCar = null; Town.cars = Town.cars.filter((c) => !c.offer);
   Room.enter(cab); HUD.render();
 

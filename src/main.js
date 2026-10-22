@@ -8,6 +8,7 @@ import { G, PRE_DATE, freshSave, jEntry, persist, replaceSave, state, working } 
 import { $, TEST, frSpace, wait } from './core/utils.js';
 import { TIPS } from './data/tips.js';
 import { TitleFX, TownFX, UIFX, sampleOpaque } from './fx/effects.js';
+import { PlayAnim } from './fx/play-button.js';
 import { Clouds, Fade } from './fx/transitions.js';
 import { Board } from './game/board.js';
 import { Build } from './game/build.js';
@@ -15,6 +16,7 @@ import { Career } from './game/career.js';
 import { Contracts } from './game/contracts.js';
 import { Day } from './game/day.js';
 import { Formation } from './game/formation.js';
+import { Fraude } from './game/fraude.js';
 import { Letters } from './game/letters.js';
 import { Month } from './game/month.js';
 import { Quests, resetQuestTab } from './game/quests.js';
@@ -23,6 +25,7 @@ import { Calls, Hire } from './game/staff.js';
 import { Street } from './game/street.js';
 import { Cam } from './scenes/camera.js';
 import { CASTLE_SCRIPTS, Castle } from './scenes/castle.js';
+import { DONJON_SCRIPTS, Donjon } from './scenes/donjon.js';
 import { Intro } from './scenes/intro.js';
 import { Room } from './scenes/room.js';
 import { Scenes, onTownEnter, setBackdrop, showTitle, showTown, titleScene } from './scenes/scenes.js';
@@ -38,14 +41,16 @@ import { syncSettings } from './ui/settings.js';
 import { Shop } from './ui/shop.js';
 
 /* ================= Main loop ================= */
-Object.assign(SCRIPTS, CONFRERE_SCRIPTS, CASTLE_SCRIPTS); let lastT = 0, saveT = 0;
+Object.assign(SCRIPTS, CONFRERE_SCRIPTS, CASTLE_SCRIPTS, DONJON_SCRIPTS); let lastT = 0, saveT = 0;
 function frame(t) {
   const dt = Math.min(0.05, (t - (lastT || t)) / 1000); lastT = t;
   saveT += dt; if (saveT > 4) { saveT = 0; if (state.started && (G.sess.state === 'run' || G.cab.build || G.letters.length)) persist(); }
-  if (state.screen === 'title') TitleFX.update(dt);
+  if (state.screen === 'title') { TitleFX.update(dt); PlayAnim.update(dt); }
   else if (state.screen === 'town') { TownFX.update(dt); Town.update(dt); Cam.update(dt); }
   else if (state.screen === 'cabinet') Room.update(dt);
   else if (state.screen === 'ordre') Castle.update(dt);
+  else if (state.screen === 'donjon') Donjon.update(dt);
+  if (Fraude.active) Fraude.update(dt);
   if (state.started && working()) { Session.update(dt); Letters.tick(dt); Build.tick(dt); Formation.tick(dt); }
   UIFX.update(dt); Clouds.tick(t);
   requestAnimationFrame(frame);
@@ -139,17 +144,18 @@ async function boot() {
   stage.style.setProperty('--logo-url', `url("${URLS.logo}")`);
   stage.style.setProperty('--pill-url', `url("${URLS.pill}")`);
   stage.style.setProperty('--hud-url', `url("${URLS.hud}")`);
-  const canvasImgs = ['cars', 'table_premium', ...Object.keys(ASSETS).filter((k) => /^(p_|eq_|av_|c\d|bld_)/.test(k))];
+  const canvasImgs = ['cars', 'table_premium', ...Object.keys(ASSETS).filter((k) => /^(p_|eq_|av_|c\d|bld_|qd_|qte_)/.test(k))];
   await Promise.all([
     imgReady($('titleBg'), URLS.title), imgReady($('logoImg'), URLS.logo), imgReady($('pillImg'), URLS.pill),
     imgReady($('char_l'), URLS.char_l), imgReady($('char_w'), URLS.char_w), imgReady($('char_r'), URLS.char_r),
-    imgReady($('townBg'), URLS.town2), imgReady($('cabBg'), URLS.cab_in), imgReady($('ordreBg'), URLS.ordre_in), imgReady($('hudImg'), URLS.hud),
+    imgReady($('townBg'), URLS.town2), imgReady($('donjonBg'), URLS.donjon), imgReady($('cabBg'), URLS.cab_in), imgReady($('ordreBg'), URLS.ordre_in), imgReady($('hudImg'), URLS.hud),
     imgReady($('imgShop'), URLS.btnshop), imgReady($('imgQuests'), URLS.btnquests),
     ...canvasImgs.map(loadImg),
     ...Object.keys(ASSETS).filter((k) => /_(happy|think|scared)$|^goblin$|^card_|^intro\d|^ic_table|^ic_electro/.test(k)).map((k) => loadImg(k))
   ]);
   TitleFX.logoPts = sampleOpaque($('logoImg'), { x: 532, y: 6, w: 606, h: 312 }, 260, 240, 170);
-  TitleFX.pillPts = sampleOpaque($('pillImg'), { x: 600, y: 710, w: 471, h: 123 }, 80, 240, 200);
+  TitleFX.pillPts = sampleOpaque($('pillImg'), { x: 600, y: 690, w: 470, h: 165 }, 80, 240, 200);
+  PlayAnim.init(); $('frLogo').src = URLS.qte_logo; $('frReadyLogo').src = URLS.qte_logo; $('frGaugeImg').src = URLS.qte_gauge; $('frBg').src = URLS.qte_night;
   markDecoded();
   await wait(250);
   const loader = $('loader'); loader.classList.add('ready'); setBackdrop('title');
@@ -168,7 +174,7 @@ async function boot() {
   const key = (e) => { if (['Enter', ' ', 'Spacebar'].includes(e.key)) { e.preventDefault(); viaKeyboard = true; go(); } };
   loader.addEventListener('pointerdown', go); addEventListener('keydown', key);
   /* Hooks for automated tests (only when window.__COC_TEST is set before loading) */
-  if (TEST) window.__coc = { G: () => G, setG: (g) => { replaceSave(g); persist(); }, state, Session, Room, Town, Shop, Decl, Board, Contracts, Letters, Month, Calls, Street, Career, Build, Hire, Intro, yearBooks, impot, dotation, Scenes, AudioSys, Quests, Talk, SCRIPTS, Castle, Day, Cam, Formation };
+  if (TEST) window.__coc = { G: () => G, setG: (g) => { replaceSave(g); persist(); }, state, Session, Room, Town, Shop, Decl, Board, Contracts, Letters, Month, Calls, Street, Career, Build, Hire, Intro, yearBooks, impot, dotation, Scenes, AudioSys, Quests, Talk, SCRIPTS, Castle, Day, Cam, Formation, Fraude, Donjon };
 }
 
 boot();

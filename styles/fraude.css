@@ -1,0 +1,114 @@
+/* Mini-jeu « Fraude à la sécu » (QTE musical), cachot de l'Ordre, bouton Play animé */
+
+/* ---------- bouton « Fraude » dans le cabinet (coordonnées de l'art 1672×941) ---------- */
+#btnFraud{left:1428px;top:286px;width:214px;height:96px;border-radius:28px;flex-direction:row;gap:10px;animation:frWobble 2.6s ease-in-out infinite}
+#btnFraud span:last-child{font-size:34px}
+#btnFraud .fr-btn-ico{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffe27a,#f2a11c 70%);border:4px solid #5d0d05;font:30px/1 var(--font-display);color:#7a3d00;text-shadow:none}
+@keyframes frWobble{0%,84%,100%{transform:rotate(0)}88%{transform:rotate(-6deg) scale(1.06)}92%{transform:rotate(6deg) scale(1.06)}96%{transform:rotate(-3deg)}}
+.gbtn.dark{border-color:#12060a;background:linear-gradient(#6b3a4a,#3b1724 55%,#22080f);box-shadow:inset 0 4px 0 rgba(255,255,255,.25),inset 0 -6px 0 rgba(0,0,0,.35),0 6px 0 rgba(0,0,0,.3)}
+
+/* ---------- l'écran du mini-jeu (coordonnées de la scène 1920×1080) ---------- */
+#fraude{z-index:12;background:#0b0618}
+.fr-root{position:absolute;inset:0;overflow:hidden}
+.fr-bg{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover}
+#frBack,#frFront{position:absolute;left:0;top:0;width:1920px;height:1080px;pointer-events:none}
+.fr-logo{position:absolute;left:22px;top:10px;width:430px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.5));animation:frLogo 1.28s ease-in-out infinite;transform-origin:30% 60%}
+@keyframes frLogo{0%,100%{transform:scale(1) rotate(-1deg)}50%{transform:scale(1.04) rotate(1deg)}}
+
+/* jauge de risque */
+.fr-gauge{position:absolute;left:36px;top:300px;width:156px;height:620px;pointer-events:none}
+.fr-gauge img{position:absolute;left:0;top:0;width:156px;height:620px;z-index:2}
+.fr-gwin{position:absolute;left:47px;top:169px;width:62px;height:325px;overflow:hidden;border-radius:4px;z-index:3}
+.fr-gfill{position:absolute;left:0;right:0;bottom:0;height:0;background:repeating-linear-gradient(-45deg,rgba(255,255,255,.18) 0 10px,transparent 10px 20px),linear-gradient(#ffb199,#ff2b1a 30%,#b30d05);background-size:28px 28px,100% 100%;box-shadow:0 0 22px 6px rgba(255,40,20,.85),inset 0 0 12px rgba(255,255,255,.5);animation:frStripes .6s linear infinite}
+.fr-gfill::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:#fff;box-shadow:0 0 14px 4px #ff7a5a}
+@keyframes frStripes{to{background-position:28px 0,0 0}}
+.fr-siren{position:absolute;left:44px;top:18px;width:70px;height:70px;border-radius:50%;z-index:4;opacity:0}
+#fraude.alarm .fr-siren,#fraude.caught .fr-siren{animation:frSiren .45s ease-in-out infinite alternate}
+@keyframes frSiren{from{opacity:.2;box-shadow:0 0 20px 10px rgba(255,30,10,.4)}to{opacity:1;background:radial-gradient(circle,rgba(255,240,220,.9),rgba(255,40,20,.6) 55%,transparent 70%);box-shadow:0 0 70px 40px rgba(255,30,10,.75)}}
+.fr-glab{position:absolute;left:-10px;right:-10px;top:628px;text-align:center;font:28px/1 var(--font-display);color:#ff9a8a;text-shadow:var(--o-sm)}
+.fr-gtxt{position:absolute;left:-10px;right:-10px;top:664px;text-align:center;font:40px/1 var(--font-display);color:#fff;text-shadow:var(--o-sm);font-variant-numeric:tabular-nums}
+#fraude.alarm .fr-gtxt{color:#ff5a4a;animation:nudge .45s ease-in-out infinite}
+
+/* paroles façon karaoké */
+fr-lyrics-placeholder{}
+.fr-lyrics{position:absolute;left:420px;right:420px;top:112px;text-align:center;pointer-events:none}
+.fr-l1{font:54px/1.15 var(--font-display);color:rgba(255,255,255,.55);text-shadow:0 4px 0 #1b0636,3px 0 0 #1b0636,-3px 0 0 #1b0636,0 -3px 0 #1b0636,0 0 24px rgba(180,60,255,.6);text-wrap:balance}
+.fr-l1 span{display:inline-block;margin:0 .09em;transition:color .08s,transform .15s}
+.fr-l1 span.on{color:#ffe27a;transform:scale(1.08) translateY(-4px);text-shadow:0 4px 0 #6a2a00,3px 0 0 #6a2a00,-3px 0 0 #6a2a00,0 -3px 0 #6a2a00,0 0 26px rgba(255,200,60,.9)}
+.fr-l1.chorus{font-size:62px;letter-spacing:.02em}
+.fr-l1.l{font-size:50px}
+.fr-l1.xl{font-size:44px}
+.fr-l1.chorus span.on{color:#ff6bd0;text-shadow:0 4px 0 #3b0030,3px 0 0 #3b0030,-3px 0 0 #3b0030,0 -3px 0 #3b0030,0 0 30px rgba(255,80,200,.95);animation:frWord .3s ease-out}
+@keyframes frWord{0%{transform:scale(1.5) rotate(-6deg)}100%{transform:scale(1.08) translateY(-4px)}}
+.fr-l1.in{animation:frLineIn .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes frLineIn{from{opacity:0;transform:translateY(24px) scale(.9)}}
+.fr-l2{margin-top:14px;font:30px/1.2 var(--font-display);color:rgba(255,255,255,.55);text-shadow:0 3px 0 #1b0636}
+
+/* score, combo */
+.fr-score{position:absolute;right:36px;top:118px;text-align:right;pointer-events:none}
+.fr-cash{font:64px/1 var(--font-display);color:#ffd43a;text-shadow:var(--o-lg),0 0 24px rgba(255,200,40,.7);font-variant-numeric:tabular-nums}
+.fr-sub{margin-top:6px;font:28px/1 var(--font-display);color:#fff;text-shadow:var(--o-sm)}
+.fr-combo{position:absolute;right:46px;top:228px;display:flex;flex-direction:column;align-items:flex-end;pointer-events:none}
+.fr-combo b{font:96px/0.9 var(--font-display);font-weight:400;color:#fff;text-shadow:var(--o-lg),0 0 30px rgba(120,200,255,.9)}
+.fr-combo small{font:30px/1 var(--font-display);color:#9fd8ff;text-shadow:var(--o-sm);text-transform:uppercase;letter-spacing:.1em}
+.fr-combo[data-tier="1"] b{color:#9ff06b;text-shadow:var(--o-lg),0 0 30px rgba(140,255,90,.9)}
+.fr-combo[data-tier="2"] b{color:#ffd43a;text-shadow:var(--o-lg),0 0 34px rgba(255,200,40,.95)}
+.fr-combo[data-tier="3"] b{color:#ff6bd0;text-shadow:var(--o-lg),0 0 40px rgba(255,80,200,1);animation:frHue 1s linear infinite}
+@keyframes frHue{to{filter:hue-rotate(360deg)}}
+.fr-combo.pop b{animation:frPop .25s ease-out}
+@keyframes frPop{from{transform:scale(1.35)}}
+.fr-count{position:absolute;left:0;right:0;top:330px;text-align:center;font:200px/1 var(--font-display);color:#fff;text-shadow:var(--o-lg),0 0 60px rgba(255,80,200,.9);pointer-events:none}
+.fr-count.pop{animation:frCount .5s cubic-bezier(.2,1.5,.4,1)}
+@keyframes frCount{from{transform:scale(2.4);opacity:0}}
+
+/* zones tactiles des 4 flèches */
+.fr-pads{position:absolute;left:440px;top:470px;width:1040px;height:610px;display:flex}
+.fr-pads button{flex:1;border:0;background:transparent;cursor:pointer;padding:0;touch-action:none;-webkit-tap-highlight-color:transparent}
+.fr-stop{position:absolute;right:30px;top:18px;height:80px;padding:0 30px;font-size:34px}
+#fraude:not(.playing) .fr-stop,#fraude:not(.playing) .fr-pads{display:none}
+
+/* écran d'accueil et écran de fin */
+.fr-ready{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at center,rgba(20,4,40,.55),rgba(5,0,15,.85))}
+.fr-card{width:1180px;box-sizing:border-box;padding:30px 60px 44px;border-radius:44px;background:linear-gradient(rgba(40,10,70,.92),rgba(18,4,36,.95));border:6px solid #ff5ac8;box-shadow:0 0 0 6px #1a0630,0 0 60px rgba(255,80,200,.6),inset 0 0 40px rgba(120,40,200,.4);text-align:center;animation:panelIn .4s cubic-bezier(.3,1.5,.5,1) both}
+.fr-card-logo{width:640px;margin:-6px auto 4px;display:block;filter:drop-shadow(0 10px 18px rgba(0,0,0,.5))}
+.fr-card h3{margin:10px 0 18px;font:64px/1 var(--font-display);color:#ffd43a;text-shadow:var(--o-lg)}
+.fr-rules{margin:0 0 20px;font:800 30px/1.4 var(--font-body);color:#f3e8ff}
+.fr-rules b{color:#ffd43a}
+.fr-rules small{display:block;margin-top:12px;font-size:24px;color:#d0b8ff}
+.fr-keys{display:flex;justify-content:center;align-items:center;gap:14px;margin-bottom:26px}
+.fr-keys span{display:grid;place-items:center;width:70px;height:70px;border-radius:18px;border:4px solid #fff;font:44px/1 var(--font-display);color:#fff;text-shadow:var(--o-sm)}
+.fr-keys span:nth-child(1){background:#ff3fb4}.fr-keys span:nth-child(2){background:#2f9bff}.fr-keys span:nth-child(3){background:#ffa41f}.fr-keys span:nth-child(4){background:#2fe36b}
+.fr-keys small{font:800 24px/1 var(--font-body);color:#d0b8ff;margin-left:10px}
+.fr-btns{display:flex;justify-content:center;gap:30px}
+.fr-btns .btn[disabled]{filter:grayscale(.6);opacity:.75}
+#frGo{animation:nudge 1s ease-in-out infinite}
+
+/* ---------- le cachot (coordonnées de l'art) ---------- */
+.donjon .room-ui{position:absolute;inset:0;pointer-events:none}
+.donjon .room-ui > *{pointer-events:auto}
+.dj-title{border-color:#3b0a05!important;background:linear-gradient(#c0392b,#7a140b)!important}
+#djTalk{left:1050px;top:800px;width:320px;height:96px;border-radius:28px}
+#djTalk span,#djExit span{font-size:32px}
+#djExit{left:28px;top:800px;width:220px;height:96px;border-radius:28px}
+
+/* amende */
+#jailFine{z-index:16}
+.jf-panel{left:520px;top:150px;width:880px;height:760px}
+.phead.red{background:linear-gradient(#ff7b6b,#b2200f)}
+.jf-body{position:absolute;left:0;right:0;top:116px;bottom:140px;padding:26px 50px;display:flex;flex-direction:column;gap:14px}
+.jf-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 22px;border-radius:22px;background:#fff;border:4px solid #c9d6ea;font:32px/1.1 var(--font-display);color:var(--text)}
+.jf-row small{display:block;margin-top:4px;font:800 21px/1.2 var(--font-body);color:var(--muted)}
+.jf-row b{font-weight:400;white-space:nowrap}
+.jf-row b.neg{color:#c0291b}
+.jf-row.big{border-color:#ff8b7b;background:#fff1ee;font-size:36px}
+.jf-note{margin:6px 0 0;font:800 23px/1.35 var(--font-body);color:var(--muted)}
+.jf-foot{position:absolute;left:0;right:0;bottom:0;height:140px;display:grid;place-items:center}
+
+/* ---------- nouveau bouton Play de l'écran titre ---------- */
+.play{border-radius:40px}
+.play-sprite{position:absolute;pointer-events:none;background-repeat:no-repeat}
+.play-hover .play-mask,.play-hover .play-glow{display:none}
+.title.intro .play{animation:pop .8s ease-out 1.55s both}
+@media (prefers-reduced-motion: reduce){#btnFraud,.fr-logo,.fr-gfill,#frGo{animation:none!important}}
+.or-menu #orDonjon{justify-content:center}
+.or-menu{top:330px}

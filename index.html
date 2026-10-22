@@ -29,6 +29,7 @@
 <link rel="stylesheet" href="styles/features.css">
 <link rel="stylesheet" href="styles/intro.css">
 <link rel="stylesheet" href="styles/castle-day.css">
+<link rel="stylesheet" href="styles/fraude.css">
 <script type="module" src="src/main.js"></script>
 </head>
 <body>
@@ -67,7 +68,7 @@
           <div class="rays"></div>
           <canvas class="fx" id="fxTitle" width="1672" height="941"></canvas>
           <button class="play" id="playBtn" type="button" aria-label="Jouer">
-            <span class="play-hover"><span class="play-glow"></span><span class="play-mask"><img id="pillImg" alt=""><span class="shine"></span></span></span>
+            <span class="play-hover"><span class="play-sprite" id="playSprite"></span><span class="play-glow"></span><span class="play-mask"><img id="pillImg" alt=""><span class="shine"></span></span></span>
           </button>
         </div>
       </div>
@@ -108,6 +109,7 @@
           <button class="gbtn" id="btnCollect" type="button" hidden></button>
           <button class="gbtn green" id="btnTalkTit" type="button" hidden></button>
           <button class="gbtn" id="btnOfferTit" type="button" hidden></button>
+          <button class="gbtn red" id="btnFraud" type="button" hidden aria-label="Lancer le mini-jeu Fraude"><span class="fr-btn-ico">€</span><span>Fraude</span></button>
           <div id="dayCoins"></div>
           <div id="dayCombo" hidden></div>
           <div id="dayBar" hidden>
@@ -129,8 +131,21 @@
             <button class="gbtn green" id="orTalk" type="button"><span>Parler à Pascale</span></button>
             <button class="gbtn yellow" id="orQuiz" type="button"></button>
             <button class="gbtn blue" id="orMail" type="button"></button>
+            <button class="gbtn dark" id="orDonjon" type="button"><span>Descendre au cachot</span></button>
           </div>
           <button class="gbtn blue" id="btnOrdreExit" type="button" aria-label="Sortir du château"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene donjon" id="donjonScene" hidden aria-label="Le cachot du château de l'Ordre">
+      <div class="art" id="donjonArt">
+        <img class="bg" id="donjonBg" alt="Le cachot du château de l'Ordre, éclairé par des torches">
+        <canvas class="fx" id="donjonCv" width="1672" height="941"></canvas>
+        <div class="room-ui" id="donjonUi">
+          <div class="or-title dj-title" id="djTitle">Le cachot de l'Ordre</div>
+          <button class="gbtn green" id="djTalk" type="button"><span>Parler à Damien</span></button>
+          <button class="gbtn blue" id="djExit" type="button"><span>Remonter</span></button>
         </div>
       </div>
     </section>
@@ -157,6 +172,42 @@
     </div>
 
     <div id="ui">
+      <div id="fraude" class="modal" hidden aria-label="Mini-jeu Fraude à la sécu">
+        <div class="fr-root" id="frRoot">
+          <img class="fr-bg" id="frBg" alt="">
+          <canvas id="frBack" width="1920" height="1080"></canvas>
+          <canvas id="frFront" width="1920" height="1080"></canvas>
+          <img class="fr-logo" id="frLogo" alt="Fraude à la sécu">
+          <div class="fr-gauge" id="frGauge" aria-label="Jauge de risque"><img id="frGaugeImg" alt=""><div class="fr-gwin" id="frGWin"><div class="fr-gfill" id="frGFill"></div></div><span class="fr-siren"></span><span class="fr-glab">Risque</span><span class="fr-gtxt" id="frGTxt">0 %</span></div>
+          <div class="fr-lyrics" aria-live="off"><div class="fr-l1" id="frL1"></div><div class="fr-l2" id="frL2"></div></div>
+          <div class="fr-score"><div class="fr-cash" id="frCash">0 €</div><div class="fr-sub" id="frSub">0 séance fictive</div></div>
+          <div class="fr-combo" id="frCombo" hidden></div>
+          <div class="fr-count" id="frCount"></div>
+          <div class="fr-pads" id="frPads"><button type="button" data-l="0" aria-label="Flèche gauche"></button><button type="button" data-l="1" aria-label="Flèche bas"></button><button type="button" data-l="2" aria-label="Flèche haut"></button><button type="button" data-l="3" aria-label="Flèche droite"></button></div>
+          <button class="btn btn-red fr-stop" id="frStop" type="button">J'arrête !</button>
+          <div class="fr-ready" id="frReady">
+            <div class="fr-card">
+              <img class="fr-card-logo" id="frReadyLogo" alt="Fraude à la sécu">
+              <p class="fr-rules" id="frRules"></p>
+              <div class="fr-keys"><span>←</span><span>↓</span><span>↑</span><span>→</span><small>ou touche les boutons</small></div>
+              <div class="fr-btns"><button class="btn btn-gray" id="frHonest" type="button">Rester honnête</button><button class="btn btn-red" id="frGo" type="button"><span>Lancer la fraude</span></button></div>
+            </div>
+          </div>
+          <div class="fr-ready" id="frEnd" hidden>
+            <div class="fr-card"><h3 id="frEndTitle"></h3><p class="fr-rules" id="frEndBody"></p><div class="fr-btns"><button class="btn btn-green" id="frEndOk" type="button">Retour au cabinet</button></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="jailFine" class="modal" hidden>
+        <div class="dim"></div>
+        <div class="panel jf-panel" role="dialog" aria-modal="true" aria-labelledby="jfTitle">
+          <div class="phead red"><h2 id="jfTitle">Amende</h2></div>
+          <div class="jf-body"><div class="jf-rows" id="jfRows"></div><p class="jf-note" id="jfNote"></p></div>
+          <div class="jf-foot"><button class="btn btn-red" id="jfPay" type="button">Payer et sortir</button></div>
+        </div>
+      </div>
+
       <div id="dayEnd" class="modal" hidden>
         <div class="dim"></div>
         <div class="panel de-panel" role="dialog" aria-modal="true" aria-labelledby="deTitle">

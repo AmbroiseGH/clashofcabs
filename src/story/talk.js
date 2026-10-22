@@ -6,7 +6,7 @@ import { Guide } from '../ui/guide.js';
 import { hideToast } from '../ui/helpers.js';
 
 /* ================= Dialogue engine ================= */
-const ACTOR_NAMES = { mentor: MENTOR, goblin: 'Gobelin de la CPAM', ambroise: 'Ambroise', mathieu: 'Mathieu', marvin: "Marvin · URSSAF", menton: 'M. Menton', thomas: 'Thomas Cassmoildeau', julien: 'Julien Coulommiers', etienne: 'Étienne Poulet' };
+const ACTOR_NAMES = { mentor: MENTOR, goblin: 'Gobelin de la CPAM', ambroise: 'Ambroise', mathieu: 'Mathieu', marvin: "Marvin · URSSAF", menton: 'M. Menton', thomas: 'Thomas Cassmoildeau', julien: 'Julien Coulommiers', etienne: 'Étienne Poulet', damien: 'Damien · Chevalier de la Sécu' };
 const ACTOR_THEME = { marvin: 'urssaf', goblin: 'cnam' };
 export const Talk = {
   active: false, waiting: null, typing: null, asking: false, keyPick: null,

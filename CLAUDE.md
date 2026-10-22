@@ -10,7 +10,7 @@ Educational mobile game (French UI) about running a physiotherapy (kiné) practi
 - Save state: `G` in `src/core/save.js` (localStorage `coc-save-v4`). Imported bindings are read-only in ES modules, so **reassigning shared `let` state goes through a setter** (`replaceSave`, `setFreezeLayout`, `resetQuestTab`, `takeMusicData`/`markDecoded`). Mutate `G.x` freely, but never write `G = …` outside save.js.
 - Module cycles exist (e.g. town ↔ room ↔ session). That's fine because modules only use each other inside functions. **Top-level code may only touch other modules' `const`/`let` if those are leaf modules** (`core/utils`, `core/save`, `data/*`). Anything else eager belongs in `main.js` (e.g. `Object.assign(SCRIPTS, CONFRERE_SCRIPTS, CASTLE_SCRIPTS)`).
 - Dialogue scripts: `SCRIPTS` (story/scripts.js) is extended in main.js with `CONFRERE_SCRIPTS` and `CASTLE_SCRIPTS`.
-- Assets are referenced by relative paths `assets/…` listed in `ASSETS` (src/core/assets.js). The loader fetches all of them before the title screen. Keep paths relative: the site is served under `/clash-of-cabs/`.
+- Assets are referenced by relative paths `assets/…` listed in `ASSETS` (src/core/assets.js). The loader fetches all of them before the title screen. Keep paths relative: the site is served under `/clashofcabs/` (https://ambroisegh.github.io/clashofcabs/).
 - `sw.js`: offline cache (network-first for code, cache-first for assets). Bump `VERSION` when replacing an asset in place. The service worker is disabled on localhost.
 
 ## Testing
@@ -21,4 +21,4 @@ Educational mobile game (French UI) about running a physiotherapy (kiné) practi
 ## Conventions
 - In-game text is French, with typographic apostrophes/spaces handled by `frSpace()`. Money is formatted with `fmt`/`eur`.
 - Pedagogical content must stay accurate to French physiotherapy regulations (Ordre des MK, URSSAF, CARPIMKO, CPAM, 2035, micro-BNC). When unsure, flag it rather than invent.
-- Work on a branch and open a PR for anything beyond a typo fix.
+- This repository (AmbroiseGH/clashofcabs) is Ambroise's personal backup of the QTE version; the group's shared repository is separate. Work on a branch and open a PR for anything beyond a typo fix.

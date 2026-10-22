@@ -2,7 +2,9 @@
 
 Jeu pédagogique de gestion de cabinet de kinésithérapie : du diplôme au cabinet à soi, en passant par le remplacement, l'assistanat, les contrats, l'Ordre, la compta et la 2035. Projet K5, UE14 (législation et gestion de cabinet).
 
-**Jouer :** https://robhulk2004-svg.github.io/clash-of-cabs/
+**Jouer :** https://ambroisegh.github.io/clashofcabs/
+
+> Ce dépôt est la **sauvegarde personnelle d'Ambroise** (compte AmbroiseGH) de la version du 22 octobre 2026 qui ajoute le mini-jeu musical « Fraude à la Sécu » (QTE) et le cachot de l'Ordre. Seul son propriétaire peut le modifier.
 
 Sur téléphone, ouvrez le lien puis « Ajouter à l'écran d'accueil » (menu Partager sur iPhone, menu ⋮ sur Android). Le jeu s'installe comme une appli, en plein écran, et fonctionne ensuite sans connexion.
 
@@ -54,18 +56,11 @@ tests/            test automatique qui joue une partie tout seul
 
 ---
 
-## Travailler à plusieurs
+## Modifier cette version
 
 **Petite correction de texte :** directement sur github.com. Ouvrez le fichier, cliquez sur le crayon ✏️, modifiez, puis « Commit changes ». C'est en ligne une minute après.
 
-**Modification plus importante :** chacun travaille sur sa propre **branche**, pour ne pas casser le jeu des autres :
-1. Créez une branche (par exemple `quetes-titulaire`).
-2. Faites vos changements dessus.
-3. Ouvrez une **Pull Request** vers `main`. Un autre membre du groupe y jette un œil, puis « Merge ».
-
-Si deux personnes ont modifié la même ligne, GitHub le signale au moment du merge au lieu d'écraser le travail de l'autre.
-
-**Avec Claude :** demandez-lui de travailler sur le dépôt `robhulk2004-svg/clash-of-cabs`. Il lit le fichier `CLAUDE.md`, qui lui explique comment le projet est construit.
+**Avec Claude :** demandez-lui de travailler sur le dépôt `AmbroiseGH/clashofcabs`. Il lit le fichier `CLAUDE.md`, qui lui explique comment le projet est construit.
 
 **Pour tester sur votre ordinateur avant d'envoyer :** il faut [Node.js](https://nodejs.org). Dans le dossier du projet, lancez `npm start`, puis ouvrez http://localhost:8000. Un double-clic sur `index.html` ne suffit pas : le navigateur bloque les modules JavaScript ouverts en `file://`.
 
